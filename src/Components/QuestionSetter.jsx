@@ -13,14 +13,11 @@ function QuestionSetter() {
   const [courseCode, setCourseCode] = useState('')
   const [courseName, setCourseName] = useState('')
   const [shortQuestions, setShortQuestions] = useState([])
-  const [longQuestions, setLongQuestions] = useState([])
   const [questionText, setQuestionText] = useState('');
   const [questionType, setQuestionType] = useState('choose');
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
-  const [co, setCo] = useState('');
-  const [view, setView] = useState('hidden')
-  
+  const [co, setCo] = useState('');  
 
   // Functions
   const handleExamName = (e) => {
@@ -56,6 +53,10 @@ function QuestionSetter() {
     setCourseName(e.target.value)
   }
 
+  const handleQuestionText = (e) => {
+    setQuestionText(e.target.value)
+  }
+
   const handleAddQuestion = () => {
     if (shortQuestions.length < 8) {
       const marks = questionType === 'long' ? 10 : 2;
@@ -66,15 +67,16 @@ function QuestionSetter() {
         bloomLevel: bloomLevel,
         co: co,
       };
-      questionType === 'long' ? setLongQuestions([...longQuestions, question]) : setShortQuestions([...shortQuestions, question]);
+      setShortQuestions([...shortQuestions, question]);
       setQuestionText('');
       setQuestionType('choose');
       setUnit('');
       setBloomLevel('');
       setCo('');
-      alert(`${shortQuestions.length + 1} short questions and ${longQuestions.length + 1} long questions added`);
+      alert(`${shortQuestions.length + 1} question added`);
+      console.log(shortQuestions);
     } else {
-      alert('You can only add 8 short questions and 4 long questions.');
+      alert('You can only add 8 questions');
     }
   };
 
@@ -172,7 +174,7 @@ function QuestionSetter() {
           <div className='text-center'>
             <h2>Question Text</h2>
             {/* Textarea to set question */}
-            <textarea id='qeText' className='mt-3 border-2 rounded-lg bg-black text-white p-3 resize-none focus:outline-none' rows={10} cols={70} placeholder='Enter question...'/>
+            <textarea value={questionText} onChange={handleQuestionText} className='mt-3 border-2 rounded-lg bg-black text-white p-3 resize-none focus:outline-none' rows={10} cols={70} placeholder='Enter question...'/>
 
             {/* Container to put add and done buttons */}
           <div className='flex justify-between px-3'>
@@ -231,7 +233,7 @@ function QuestionSetter() {
          </div>
       </div>
 
-      <QuestionPaper examName={examName} programName={programName} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions} longQuestions={longQuestions} view={view}/>
+      <QuestionPaper examName={examName} programName={programName} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions}/>
     </>  
   )
 }

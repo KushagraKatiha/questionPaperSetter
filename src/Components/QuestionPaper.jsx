@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRef } from 'react';
 
-function QuestionPaper({ examName, programName, semester, year, courseCode, courseName, shortQuestions, view, longQuestions}) {
+function QuestionPaper({ examName, programName, semester, year, courseCode, courseName, shortQuestions}) {
 
     const printRef = useRef(null);
 
@@ -18,7 +18,7 @@ function QuestionPaper({ examName, programName, semester, year, courseCode, cour
     <>
         {/* Question Paper Card */}
       {/* Main Container */}
-      <div id='questionPaper' className={`text-black mt-20 w-full h-full inset-0 bg-pink-600 flex flex-col items-center justify-center absolute top-0 ${view}`}>
+      <div id='questionPaper' className={`text-black mt-20 w-full h-full iinset-0 bg-black bg-opacity-50 backdrop-blur-sm flex flex-col items-center justify-center`}>
         <div className='px-6 bg-white h-5/6 w-9/12'>
           {/* College Banner Container */}
           {/* College Banner */}
@@ -77,9 +77,9 @@ function QuestionPaper({ examName, programName, semester, year, courseCode, cour
             {shortQuestions.map((question, index) => {
                 return (
                     <div key={index} className='flex justify-between mt-4'>
-                        <p className='text-wrap w-1/2'>{index + 1}. {question.text}</p>
+                        <p className='text-wrap w-1/2'>{index + 1}.{question.text}</p>
                         <div className='flex gap-16 text-sm'>
-                            <p>{question.maxMarks}</p>
+                            <p>({question.maxMarks})</p>
                             <p>{question.unit}</p>
                             <p>{question.bloomLevel}</p>
                             <p>{question.co}</p>
@@ -88,24 +88,7 @@ function QuestionPaper({ examName, programName, semester, year, courseCode, cour
                 )
             })}
         </div>
-
-        {/* Long Questions */}
-        
-        <div>
-            {longQuestions.map((question, index) => {
-                return (
-                    <div key={index} className='flex justify-between mt-4'>
-                        <p className='text-wrap w-1/2'>{index + 1}. {question.text}</p>
-                        <div className='flex gap-16 text-sm'>
-                            <p>{question.maxMarks}</p>
-                            <p>{question.unit}</p>
-                            <p>{question.bloomLevel}</p>
-                            <p>{question.co}</p>
-                        </div>
-                    </div>
-                )
-            })}
-        </div>
+      
         {/* Print Button */}
         <button className='bg-green-500 text-white px-4 py-2 rounded-lg mt-4' onClick={handlePrint}>Print</button>
         </div>    
@@ -171,35 +154,7 @@ function QuestionPaper({ examName, programName, semester, year, courseCode, cour
             {shortQuestions.map((question, index) => {
                 return (
                     <div key={index} className='flex justify-between mt-4'>
-                        <p className='text-wrap w-1/2'>{index + 1}. {question.text}</p>
-                        <div className='flex gap-16 text-sm'>
-                            <p>{question.maxMarks}</p>
-                            <p>{question.unit}</p>
-                            <p>{question.bloomLevel}</p>
-                            <p>{question.co}</p>
-                        </div>
-                    </div>
-                )
-            })}
-        </div>
-
-        {/* Short Questions */}
-        <div className='text-base font-bold flex justify-between'>
-            <h2>2. LONG QUESTIONS</h2>
-            <div className='flex gap-3 text-sm'>
-                <h2>Max Marks</h2>
-                <h2>Unit</h2>
-                <h2>Bloom Level*</h2>
-                <h2>CO</h2>
-            </div>
-        </div>
-
-        {/* Questions */}
-        <div>
-            {longQuestions.map((question, index) => {
-                return (
-                    <div key={index} className='flex justify-between mt-4'>
-                        <p className='text-wrap w-1/2'>{index + 1}. {question.text}</p>
+                        <p className='text-wrap w-1/2'>{index + 1}.{question.text}</p>
                         <div className='flex gap-16 text-sm'>
                             <p>{question.maxMarks}</p>
                             <p>{question.unit}</p>
