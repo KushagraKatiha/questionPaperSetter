@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import QuestionPaper from './QuestionPaper'
 
@@ -13,11 +13,13 @@ function QuestionSetter() {
   const [courseCode, setCourseCode] = useState('')
   const [courseName, setCourseName] = useState('')
   const [shortQuestions, setShortQuestions] = useState([])
+  const [longQuestions, setLongQuestions] = useState([])
   const [questionText, setQuestionText] = useState('');
   const [questionType, setQuestionType] = useState('choose');
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');  
+  const [view, setView] = useState('hidden')
 
   // Functions
   const handleExamName = (e) => {
@@ -32,17 +34,22 @@ function QuestionSetter() {
     setSemester(e.target.value)
   }
 
-  const handleYear = (e) => {
-    if(semester === '1' || semester === '2') {
-      setYear('1st')
-    }else if(semester === '3' || semester === '4') {
-      setYear('2nd')
-    }else if(semester === '5' || semester === '6') {
-      setYear('3rd')
-    }else if(semester === '7' || semester === '8') {
-      setYear('4th')
+  const handleYear = () => {
+    if(semester === 'I' || semester === 'II') {
+      setYear('I')
+    }else if(semester === 'III' || semester === 'IV') {
+      setYear('II')
+    }else if(semester === 'V' || semester === 'VI') {
+      setYear('III')
+    }else if(semester === 'VII' || semester === 'VIII') {
+      setYear('IV')
     }
   }
+
+  useEffect(() => {
+    handleYear()
+  }
+  , [semester])
 
 
   const handleCourseCode = (e) => {
@@ -53,12 +60,31 @@ function QuestionSetter() {
     setCourseName(e.target.value)
   }
 
+  const handleQuestionType = (e) => {
+    setQuestionType(e.target.value)
+  }
+
   const handleQuestionText = (e) => {
     setQuestionText(e.target.value)
   }
 
+  const handleBloomLevel = (e) => {
+    setBloomLevel(e.target.value)
+  }
+
+  const handleUnit = (e) => {
+    setUnit(e.target.value)
+  }
+
+  const handleCo = (e) => {
+    setCo(e.target.value)
+  }
+
   const handleAddQuestion = () => {
-    if (shortQuestions.length < 8) {
+    if (
+      (questionType === 'short' && shortQuestions.length < 8) ||
+      (questionType === 'long' && longQuestions.length < 4)
+    ) {
       const marks = questionType === 'long' ? 10 : 2;
       const question = {
         text: questionText,
@@ -67,22 +93,30 @@ function QuestionSetter() {
         bloomLevel: bloomLevel,
         co: co,
       };
-      setShortQuestions([...shortQuestions, question]);
+      if (questionType === 'long') {
+        setLongQuestions((prevLongQuestions) => [...prevLongQuestions, question]);
+        alert(`${longQuestions.length + 1} Long question added`);
+      } else if (questionType === 'short') {
+        setShortQuestions([...shortQuestions, question]);
+        alert(`${shortQuestions.length + 1} Short question added`);
+      }
       setQuestionText('');
       setQuestionType('choose');
       setUnit('');
       setBloomLevel('');
       setCo('');
-      alert(`${shortQuestions.length + 1} question added`);
-      console.log(shortQuestions);
     } else {
-      alert('You can only add 8 questions');
+      alert('You can only add 8 short and 4 long questions');
     }
   };
-
+  
   const handleDone = () => {
-    document.getElementById('main_page').style.display = "none";
-    setView('visible')
+    if(shortQuestions.length === 8 && longQuestions.length === 4) {
+      document.getElementById('main_page').style.display = "none";
+      setView('visible')
+    }else{
+      alert('You have to add 8 short and 4 long questions')
+    }
   }
 
   return (
@@ -119,13 +153,17 @@ function QuestionSetter() {
             {/* Container to set semester */}
             <div>
               <h2>Semester</h2>
-              {/* Input to set semester */}
-              <input className='focus:outline-none px-2 bg-black text-white border-2 rounded-lg' 
-              type="text" 
-              placeholder='Enter semester...'
-              value={semester}
-              onChange={handleSemester}
-              />
+              {/* Dropdown to set semester */}
+              <select value={semester} onChange={handleSemester} className='text-white bg-black px-1 py-1 border-2 rounded-lg'>
+                <option value="I">I</option>
+                <option value="II">II</option>
+                <option value="III">III</option>
+                <option value="IV">IV</option>
+                <option value="V">V</option>
+                <option value="VI">VI</option>
+                <option value="VII">VII</option>
+                <option value="VIII">VIII</option>
+              </select>
             </div>
          </div>
 
@@ -163,7 +201,7 @@ function QuestionSetter() {
             <div className='bg-cyan-950 p-4 rounded-lg'> 
                 <h2>Question Type</h2>
                 {/* Dropdown to set question type */}
-                <select className='text-white px-1 py-1 bg-black border-2 rounded-lg' id='qeType'>
+                <select className='text-white px-1 py-1 bg-black border-2 rounded-lg' value={questionType} onChange={handleQuestionType}>
                   <option value="choose">choose</option>
                   <option value="long">Long</option>
                   <option value="short">Short</option>
@@ -190,7 +228,7 @@ function QuestionSetter() {
                 <div>
                 <h2>Unit</h2>
                 {/* Dropdown to set unit */}
-                <select id='qeUnit' className='text-white bg-black px-1 py-1 border-2 rounded-lg'>
+                <select value={unit} onChange={handleUnit} className='text-white bg-black px-1 py-1 border-2 rounded-lg'>
                   <option value="-">-</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -204,7 +242,7 @@ function QuestionSetter() {
                 <div> 
                 <h2>Bloom's Level</h2>
                 {/* Dropdown to set Bloom's Level */}
-                <select id='qeBL' className='text-white bg-black px-1 py-1 border-2 rounded-lg'>
+                <select value={bloomLevel} onChange={handleBloomLevel} className='text-white bg-black px-1 py-1 border-2 rounded-lg'>
                   <option value="-">-</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -219,7 +257,7 @@ function QuestionSetter() {
                 <div>
                 <h2>Course Outcome</h2>
                 {/* Dropdown to set Course Outcome */}
-                <select id='qeCO' className='text-white bg-black px-1 py-1 border-2 rounded-lg'>
+                <select value={co} onChange={handleCo} className='text-white bg-black px-1 py-1 border-2 rounded-lg'>
                   <option value="-">-</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -233,7 +271,7 @@ function QuestionSetter() {
          </div>
       </div>
 
-      <QuestionPaper examName={examName} programName={programName} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions}/>
+      <QuestionPaper examName={examName} programName={programName} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions} longQuestions={longQuestions} view={view}/>
     </>  
   )
 }
