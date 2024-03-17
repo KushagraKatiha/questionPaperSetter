@@ -13,11 +13,13 @@ function QuestionSetter() {
   const [courseCode, setCourseCode] = useState('')
   const [courseName, setCourseName] = useState('')
   const [shortQuestions, setShortQuestions] = useState([])
+  const [longQuestions, setLongQuestions] = useState([])
   const [questionText, setQuestionText] = useState('');
   const [questionType, setQuestionType] = useState('choose');
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');
+  const [view, setView] = useState('hidden')
   
 
   // Functions
@@ -64,25 +66,26 @@ function QuestionSetter() {
         bloomLevel: bloomLevel,
         co: co,
       };
-      setShortQuestions([...shortQuestions, question]);
+      questionType === 'long' ? setLongQuestions([...longQuestions, question]) : setShortQuestions([...shortQuestions, question]);
       setQuestionText('');
       setQuestionType('choose');
       setUnit('');
       setBloomLevel('');
       setCo('');
-      alert(`${shortQuestions.length + 1} question added`);
+      alert(`${shortQuestions.length + 1} short questions and ${longQuestions.length + 1} long questions added`);
     } else {
-      alert('You can only add 8 questions');
+      alert('You can only add 8 short questions and 4 long questions.');
     }
   };
 
   const handleDone = () => {
-    console.log(shortQuestions);
+    document.getElementById('main_page').style.display = "none";
+    setView('visible')
   }
 
   return (
     <>
-      <div>
+      <div id='main_page'>
          <h1 className='text-center font-extrabold py-4 w-auto text-3xl'>Set Questions Page</h1>
 
          {/* Container to set exam details */}
@@ -228,7 +231,7 @@ function QuestionSetter() {
          </div>
       </div>
 
-      <QuestionPaper examName={examName} programName={programName} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions}/>
+      <QuestionPaper examName={examName} programName={programName} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions} longQuestions={longQuestions} view={view}/>
     </>  
   )
 }
