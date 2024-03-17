@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import QuestionPaper from './QuestionPaper'
 
-
 function QuestionSetter() {
   // Variables
   
@@ -121,7 +120,7 @@ function QuestionSetter() {
 
   return (
     <>
-      <div id='main_page'>
+      <div id='main_page' className='mb-4'>
          <h1 className='text-center font-extrabold py-4 w-auto text-3xl'>Set Questions Page</h1>
 
          {/* Container to set exam details */}
