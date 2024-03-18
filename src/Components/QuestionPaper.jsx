@@ -12,7 +12,7 @@ function QuestionPaper({
   longQuestions,
   view
 }) {
-  
+      
   const printRef = useRef(null);
 
   const handlePrint = () => {
@@ -149,7 +149,7 @@ function QuestionPaper({
           <div>
             <div className="flex mt-4">
               <span className="font-extrabold">2.</span>
-              <div className="flex justify-between">
+              <div className="w-full flex justify-between">
               <p className="flex">
                 <span className="ml-2 font-extrabold">A. </span>{longQuestions[0].text}
               </p>
@@ -345,8 +345,8 @@ function QuestionPaper({
           {/* Questions */}
           <div>
             <div className="flex mt-4">
-              <span className="font-extrabold">2.</span>
-              <div className="flex justify-between">
+              <span className="font-extrabold">8.</span>
+              <div className="w-full flex justify-between">
               <p className="flex">
                 <span className="ml-2 font-extrabold">A. </span>{longQuestions[0].text}
               </p>
