@@ -4,6 +4,7 @@ import { useRef } from "react";
 function QuestionPaper({
   examName,
   programName,
+  academicSession,
   semester,
   year,
   courseCode,
@@ -70,7 +71,7 @@ function QuestionPaper({
                     Semester:{semester}
                   </td>
                   <td className="px-3 border-black border-2">
-                    Academic Session: 2023-2024
+                    Academic Session: {academicSession}
                   </td>
                 </tr>
                 <tr className="border-black border-2">

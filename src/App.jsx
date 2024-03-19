@@ -3,7 +3,7 @@ import QuestionSetter from "./Components/QuestionSetter"
 function App() {
   
   return (
-    <div className="bg-black text-green-400">
+    <div className=" text-black" style={{backgroundImage: 'linear-gradient(to right, #f4e7ff, #a77ed6)'}}>
       <QuestionSetter />
     </div>
   )
