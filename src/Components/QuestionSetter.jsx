@@ -6,8 +6,7 @@ function QuestionSetter() {
   // Variables
 
   const [examName, setExamName] = useState('')
-  const [programName, setProgramName] = useState('')
-  const [academicSession, setAcademicSession] = useState('')
+  const [selectedPrograms, setSelectedPrograms] = useState([])
   const [semester, setSemester] = useState('')
   const [year, setYear] = useState('')
   const [courseCode, setCourseCode] = useState('')
@@ -22,17 +21,26 @@ function QuestionSetter() {
   const [view, setView] = useState('visible')
 
   // Functions
+
+ 
+
+
   const handleExamName = (e) => {
     setExamName(e.target.value)
   }
 
-  const handleProgramName = (e) => {
-    setProgramName(e.target.value)
-  }
+  // Function to handle adding selected program
+  const handleProgramSelection = (e) => {
+    const program = e.target.value;
+    if (!selectedPrograms.includes(program)) {
+      setSelectedPrograms([...selectedPrograms, program]);
+    }
+  };
 
-  const handleAcademicSession = (e) => {
-    setAcademicSession(e.target.value)
-  }
+  // Function to handle removing selected program
+  const handleRemoveProgram = (program) => {
+    setSelectedPrograms(selectedPrograms.filter((p) => p !== program));
+  };
 
   const handleSemester = (e) => {
     setSemester(e.target.value)
@@ -52,9 +60,7 @@ function QuestionSetter() {
 
   useEffect(() => {
     handleYear()
-  }
-    , [semester])
-
+  }, [semester])
 
   const handleCourseCode = (e) => {
     setCourseCode(e.target.value)
@@ -135,13 +141,13 @@ function QuestionSetter() {
         <hr className='border-2 border-black' />
 
         {/* Container for upper part */}
-        <div className='flex justify-evenly mt-7 items-center py-10'>
+        <div className='flex justify-evenly w-full mt-7 items-center py-10'>
           {/* container for exam and program */}
-          <div className='flex flex-col gap-10'>
+          <div className='flex flex-col w-1/4 gap-10'>
             <div>
               <h2 className='font-bold text-lg'>Exam Name</h2>
               {/* Input to set exam name */}
-              <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg'
+              <input className='border-2 w-full border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg'
                 type="text"
                 placeholder='Enter exam name...'
                 value={examName}
@@ -150,76 +156,108 @@ function QuestionSetter() {
             </div>
 
             {/* Container to set program name */}
-            <div>
-              <h2 className='font-bold text-lg'>Program Name</h2>
-              {/* Input to set program name */}
-              <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg'
-                type="text"
-                placeholder='Enter program name...'
-                value={programName}
-                onChange={handleProgramName}
-              />
-            </div>
-
-            {/* Container to set Academic Session */}
-            <div>
-              <h2 className='font-bold text-lg'>Academic Session</h2>
-              {/* Input to set academic session */}
-              <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg'
-                type="text"
-                placeholder='Enter Academic session...'
-                value={academicSession}
-                onChange={handleAcademicSession}
-              />
+            <div className='flex flex-col'>
+              {/* Display selected programs */}
+              <div className='flex flex-wrap gap-2 '>
+                {selectedPrograms.map((program, index) => (
+                  <div key={index} className='bg-black rounded-lg px-2 py-1'>
+                    <span className='text-white'>{program}</span>
+                    <button
+                      onClick={() => handleRemoveProgram(program)}
+                      className='ml-2 text-red-500 focus:outline-none'
+                    >
+                      &#10005;
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className='w-full'>
+                <h2 className='font-bold text-lg'>Program Name</h2>
+                {/* Dropdown to select program names */}
+                <select
+                  className='w-full border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-[#9CA3AF] rounded-lg'
+                  onChange={handleProgramSelection}
+                >
+                  <option value="" disabled="" selected="">Select Program....</option>
+                  <option value="B.Tech CSE">B.Tech. (CSE) (Computer Sciences and Engineering)</option>
+                  <option value="B.Tech AI-ML-DL">B.Tech. (CSE) Specialization in Artificial
+                    Intelligence, Machine Learning &amp;
+                    Deep Learning</option>
+                  <option value="B.Tech CTIS">B.Tech.(CSE)-Cloud Technology &amp; InformationSecurity (CTIS)(In Collaboration with i-Nurture) (Was Offered till 2023-24.)</option>
+                  <option value="B.Tech TCS">B.Tech. (CSE)-Data Science (In Collaboration with i-Nurture) (Was Offered till 2023-24.)</option>
+                  <option value="B.Tech i-Nurture">B.Tech.(CSE)-Cyber Security
+                    (In Collaboration with i-Nurture) (Was Offered till 2023-24.)</option>
+                  <option value="B.Tech AI">B.Tech.(CSE)-specialisation in Artificial Intelligence (In Collaboration with i-Nurture) (Was Offered till 2023-24.)</option>
+                  <option value="B.Tech IBM">B.Tech.(CSE)-Application Development usingCloud &amp; Analytics Platform (In Collaboration with IBM) (Was Offered till 2023-24.)</option>
+                  <option value="B.Tech TCS">B.Tech.(CSE)-Data Science (In Collaboration with TCS iON)</option>
+                  <option value="BCA">BCA (Bachelor of Computer Applications)</option>
+                  <option value="BCA MAWT">BCA-Mobile Applications &amp; WebTechnologies (MAWT)(in collaboration with i-Nurture) (Was Offered till 2023-24.)</option>
+                  <option value="BCA CTIS">BCA- Cloud Technology &amp; InformationSecurity (CTIS)(in collaboration with i-Nurture) (Was Offered till 2023-24.)</option>
+                  <option value="BCA Hons.">BCA (Hons.)
+                    with Research (From Session 2023-24 Onwards)</option>
+                  <option value="B.Sc. Animation">B.Sc. (Animation)</option>
+                  <option value="B.Sc. CS">B.Sc.(Computer Science) (From Session 2023-24 Onwards)</option>
+                  <option value="B.Sc.Hons.CS">B.Sc. (Hons.)
+                    Compute Science
+                    with Research</option>
+                  <option value="M.Tech. CSE">M.Tech. (Computer Sciences and Engineering)</option>
+                  <option value="MCA">MCA (Master of Computer Applications)-Software Development</option>
+                  <option value="MCA-ML">MCA (Master of Computer Applications)-Machine Learning</option>
+                  <option value="MCA-NT">MCA (Master of Computer Applications)-Network Technologies</option>
+                  <option value="MCA-DS">MCA (Master of Computer Applications)-Data Science &amp; Analytics</option>
+                  <option value="MCA-AT">MCA (Master of Computer Applications)-Advance Technologies</option>
+                  <option value="M.Sc.-AI">M.Sc.-Artificial Intelligence (From Session 2023-24 Onwards)</option>
+                  <option value="M.Sc.-DS">M.Sc.- Data Science (From Session 2023-24 Onwards)</option>
+                </select>
+              </div>
             </div>
           </div>
 
           {/* container for course name course code and semester */}
-          <div className='flex flex-col gap-10'>           
-              <div>
-                <h2 className='font-bold text-lg'>Course Name</h2>
-                {/* Input to set course name */}
-                <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg'
+          <div className='flex flex-col gap-10'>
+            <div>
+              <h2 className='font-bold text-lg'>Course Name</h2>
+              {/* Input to set course name */}
+              <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg'
+                type="text"
+                placeholder='Enter course name...'
+                value={courseName}
+                onChange={handleCourseName}
+              />
+            </div>
+
+            <div className='flex'>
+              <div className='w-1/2'>
+                <h2 className='font-bold text-lg'>Course Code</h2>
+                {/* Input to set course code */}
+                <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg w-11/12'
                   type="text"
-                  placeholder='Enter course name...'
-                  value={courseName}
-                  onChange={handleCourseName}
+                  placeholder='Enter course code...'
+                  value={courseCode}
+                  onChange={handleCourseCode}
                 />
               </div>
 
-              <div className='flex'>
-                <div className='w-1/2'>
-                  <h2 className='font-bold text-lg'>Course Code</h2>
-                  {/* Input to set course code */}
-                  <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg w-11/12'
-                    type="text"
-                    placeholder='Enter course code...'
-                    value={courseCode}
-                    onChange={handleCourseCode}
-                  />
-                </div>
-
-                  <div className='ml-1 flex flex-col'>
-                    <h2 className='font-bold text-lg'>Semester</h2>
-                  {/* Dropdown to set semester */}
-                    <select value={semester} onChange={handleSemester} className='border-2 border-[#9c36b5] h-10 text-white bg-black px-1 py-1 rounded-lg'>
-                      <option value="I">I</option>
-                      <option value="II">II</option>
-                      <option value="III">III</option>
-                      <option value="IV">IV</option>
-                      <option value="V">V</option>
-                      <option value="VI">VI</option>
-                      <option value="VII">VII</option>
-                      <option value="VIII">VIII</option>
-                    </select>
-                  </div>
+              <div className='ml-1 flex flex-col'>
+                <h2 className='font-bold text-lg'>Semester</h2>
+                {/* Dropdown to set semester */}
+                <select value={semester} onChange={handleSemester} className='border-2 border-[#9c36b5] h-10 text-white bg-black px-1 py-1 rounded-lg'>
+                  <option value="I">I</option>
+                  <option value="II">II</option>
+                  <option value="III">III</option>
+                  <option value="IV">IV</option>
+                  <option value="V">V</option>
+                  <option value="VI">VI</option>
+                  <option value="VII">VII</option>
+                  <option value="VIII">VIII</option>
+                </select>
               </div>
-      
+            </div>
           </div>
 
           {/* container for image */}
           <div className='w-1/3 shadow-black shadow-2xl '>
-            <img src="https://www.instagram.com/p/CzAqK04hcto/?igsh=eDc5eWIwaWp4OWNq" alt="clock_tower" className='rounded-lg' />
+            <img src="https://iili.io/JXX6IkJ.md.jpg" alt="clock_tower" className='rounded-lg' />
           </div>
         </div>
 
@@ -228,7 +266,7 @@ function QuestionSetter() {
           {/* Container for other details */}
 
           <div className='flex flex-col gap-5 h-full'>
-          {/* Container to set question type */}
+            {/* Container to set question type */}
             <div className='bg-black p-2 rounded-lg border-2 border-[#9c36b5]'>
               <h2 className='font-bold text-white text-base'>Question Type</h2>
               {/* Dropdown to set question type */}
@@ -304,9 +342,9 @@ function QuestionSetter() {
           <div className='h-full flex gap-3 items-center mr-4'>
             <div className=''>
               <img src="https://www.tmu.ac.in/img/tmu/TMU-footer.png" alt="" />
-            </div> 
+            </div>
             <div className='flex'>
-              <div className='w-fit'> 
+              <div className='w-fit'>
                 {/* Container for name */}
                 <h2 className='text-[#531616] font-light text-xs'>Designed By: </h2>
                 <a className='text-[#531616] font-bold text-xs' href="https://www.linkedin.com/in/shefali-sneha-b80274230/" target='_blank'>Shefali Sneha</a>
@@ -315,15 +353,18 @@ function QuestionSetter() {
                 <h2 className='text-[#531616] font-light text-xs'>Developed By: </h2>
                 <a className='text-[#531616] font-bold text-xs' href="https://www.linkedin.com/in/kushagrakatiha/" target='_blank'>Kushagra Katiha</a>
                 <p className='text-[#531616] font-light text-xs'>B.Tech CSE (2021-2025)</p>
-              </div>  
-            </div> 
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-         
+      <QuestionPaper examName={examName} selectedPrograms={selectedPrograms} semester={semester} year={year} courseCode={courseCode} courseName={courseName} view={view} />
 
-      <QuestionPaper examName={examName} programName={programName} academicSession={academicSession} semester={semester} year={year} courseCode={courseCode} courseName={courseName} view={view} />
+      <button onClick={()=>{
+        generateDocxTemplate(<QuestionPaper examName={examName} selectedPrograms={selectedPrograms} semester={semester} year={year} courseCode={courseCode} courseName={courseName} view={view} />)
+      }}>Generate DOCX</button>
+
     </>
   )
 }
