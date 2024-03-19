@@ -9,10 +9,105 @@ function QuestionPaper({
   year,
   courseCode,
   courseName,
-  shortQuestions,
-  longQuestions,
+  // shortQuestions,
+  // longQuestions,
   view
 }) {
+
+  // dummy short questions
+
+  // </span> {longQuestions[3].text}
+  // </p>
+  // <div className="flex gap-16 text-sm">
+  //   <p>({longQuestions[3].maxMarks})</p>
+  //   <p>{longQuestions[3].unit}</p>
+  //   <p>{longQuestions[3].bloomLevel}</p>
+  //   <p>{longQuestions[3].co}</p>
+  const shortQuestions = [
+    {
+      text: "what is react ?",
+      maxMarks: "2",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },
+    {
+      text: "what is react ?",
+      maxMarks: "2",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },{
+      text: "what is react ?",
+      maxMarks: "2",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },{
+      text: "what is react ?",
+      maxMarks: "2",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },{
+      text: "what is react ?",
+      maxMarks: "2",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },{
+      text: "what is react ?",
+      maxMarks: "2",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },{
+      text: "what is react ?",
+      maxMarks: "2",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },{
+      text: "what is react ?",
+      maxMarks: "2",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    }
+  ]
+
+  // Dummy long questions
+
+  const longQuestions = [
+    {
+      text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
+      maxMarks: "10",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },
+    {
+      text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
+      maxMarks: "10",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },
+    {
+      text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
+      maxMarks: "10",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    },
+    {
+      text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
+      maxMarks: "10",
+      unit: "4",
+      bloomLevel: "4",
+      co: "3"
+    }
+  ]
       
   const printRef = useRef(null);
 
@@ -56,9 +151,9 @@ function QuestionPaper({
               style={{ fontStyle: "italic" }}
               className="text-xl font-extrabold"
             >
-              {examName}
+              {examName.toUpperCase()}
             </h2>
-            <h2>Program Name: {programName}</h2>
+            <h2>Program Name: {programName.toUpperCase()}</h2>
           </div>
 
           {/* Exam Details Table */}
@@ -76,15 +171,15 @@ function QuestionPaper({
                 </tr>
                 <tr className="border-black border-2">
                   <td colSpan={2} className="px-3 border-black border-2">
-                    Course Code: {courseCode}
+                    Course Code: {courseCode.toUpperCase()}
                   </td>
                   <td className="px-3 border-black border-2">
-                    Course Name: {courseName}
+                    Course Name: {courseName.toUpperCase()}
                   </td>
                 </tr>
                 <tr className="border-black border-2">
                   <td colSpan={2} className="px-3 border-black border-2">
-                    Duradion: 90 minutes
+                    Duration: 90 minutes
                   </td>
                   <td className="px-3 border-black border-2">Max Marks: 30</td>
                 </tr>
@@ -165,7 +260,7 @@ function QuestionPaper({
           </div>
             <h1 className="text-center font-extrabold">OR</h1>
           <div>
-            <div className="flex justify-between mt-4">
+            <div className="flex gap-5 mt-4">
               <p className="flex">
                 <span className="ml-4 font-extrabold">B. </span> {longQuestions[1].text}
               </p>
@@ -196,7 +291,7 @@ function QuestionPaper({
           </div>
             <h1 className="text-center font-extrabold">OR</h1>
           <div>
-            <div className="flex justify-between mt-4">
+            <div className="flex gap-5 mt-4">
               <p className="flex">
                 <span className="ml-4 font-extrabold">B. </span> {longQuestions[3].text}
               </p>
@@ -362,7 +457,7 @@ function QuestionPaper({
           </div>
             <h1 className="text-center font-extrabold">OR</h1>
           <div>
-            <div className="flex justify-between mt-4">
+            <div className="flex gap-5 mt-4">
               <p className="flex">
                 <span className="ml-4 font-extrabold">B. </span> {longQuestions[1].text}
               </p>
@@ -393,7 +488,7 @@ function QuestionPaper({
           </div>
             <h1 className="text-center font-extrabold">OR</h1>
           <div>
-            <div className="flex justify-between mt-4">
+            <div className="flex gap-5 mt-4">
               <p className="flex">
                 <span className="ml-4 font-extrabold">B. </span> {longQuestions[3].text}
               </p>

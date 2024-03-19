@@ -19,7 +19,7 @@ function QuestionSetter() {
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');
-  const [view, setView] = useState('hidden')
+  const [view, setView] = useState('visible')
 
   // Functions
   const handleExamName = (e) => {
@@ -323,7 +323,7 @@ function QuestionSetter() {
 
          
 
-      <QuestionPaper examName={examName} programName={programName} academicSession={academicSession} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions} longQuestions={longQuestions} view={view} />
+      <QuestionPaper examName={examName} programName={programName} academicSession={academicSession} semester={semester} year={year} courseCode={courseCode} courseName={courseName} view={view} />
     </>
   )
 }
