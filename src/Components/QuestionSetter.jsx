@@ -219,7 +219,7 @@ function QuestionSetter() {
 
           {/* container for image */}
           <div className='w-1/3 shadow-black shadow-2xl '>
-            <img src="/src/assets/clockTower.jpg" alt="clock_tower" className='rounded-lg' />
+            <img src="https://github.com/KushagraKatiha/examSetterImages/blob/main/clockTower.jpg" alt="clock_tower" className='rounded-lg' />
           </div>
         </div>
 
