@@ -7,98 +7,98 @@ function QuestionPaper({
   year,
   courseCode,
   courseName,
-  // shortQuestions,
-  // longQuestions,
+  shortQuestions,
+  longQuestions,
   view
 }) {
 
   // dummy short questions
 
-  const shortQuestions = [
-    {
-      text: "what is react ?",
-      maxMarks: "2",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },
-    {
-      text: "what is react ?",
-      maxMarks: "2",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },{
-      text: "what is react ?",
-      maxMarks: "2",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },{
-      text: "what is react ?",
-      maxMarks: "2",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },{
-      text: "what is react ?",
-      maxMarks: "2",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },{
-      text: "what is react ?",
-      maxMarks: "2",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },{
-      text: "what is react ?",
-      maxMarks: "2",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },{
-      text: "what is react ?",
-      maxMarks: "2",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    }
-  ]
+  // const shortQuestions = [
+  //   {
+  //     text: "what is react ?",
+  //     maxMarks: "2",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },
+  //   {
+  //     text: "what is react ?",
+  //     maxMarks: "2",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },{
+  //     text: "what is react ?",
+  //     maxMarks: "2",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },{
+  //     text: "what is react ?",
+  //     maxMarks: "2",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },{
+  //     text: "what is react ?",
+  //     maxMarks: "2",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },{
+  //     text: "what is react ?",
+  //     maxMarks: "2",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },{
+  //     text: "what is react ?",
+  //     maxMarks: "2",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },{
+  //     text: "what is react ?",
+  //     maxMarks: "2",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   }
+  // ]
 
   // Dummy long questions
 
-  const longQuestions = [
-    {
-      text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
-      maxMarks: "10",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },
-    {
-      text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
-      maxMarks: "10",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },
-    {
-      text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
-      maxMarks: "10",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    },
-    {
-      text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
-      maxMarks: "10",
-      unit: "4",
-      bloomLevel: "4",
-      co: "3"
-    }
-  ]
+  // const longQuestions = [
+  //   {
+  //     text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
+  //     maxMarks: "10",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },
+  //   {
+  //     text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
+  //     maxMarks: "10",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },
+  //   {
+  //     text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
+  //     maxMarks: "10",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   },
+  //   {
+  //     text: "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ips",
+  //     maxMarks: "10",
+  //     unit: "4",
+  //     bloomLevel: "4",
+  //     co: "3"
+  //   }
+  // ]
 
   let academicSession;
   const currentDate = new Date();
@@ -109,7 +109,7 @@ function QuestionPaper({
   } else {
     academicSession = `${currentDate.getFullYear() - 1}-${currentDate.getFullYear()}`;
   }
-      
+
   const handlePrint = () => {
     const printContents = printRef.current.innerHTML;
     const originalContents = document.body.innerHTML;
@@ -133,7 +133,7 @@ function QuestionPaper({
           {/* College Banner Container */}
           {/* College Banner */}
           <div className="bg-black mt-5">
-          <img src="https://iili.io/JXj3wq7.md.jpg" alt="clockTower" className="w-full h-[100px]"/>
+            <img src="https://iili.io/JXj3wq7.md.jpg" alt="clockTower" className="w-full h-[100px]" />
           </div>
 
           {/* College Name, Exam Name, Program Name */}
@@ -206,18 +206,26 @@ function QuestionPaper({
 
           {/* Questions */}
           <div>
-          <h2 className="font-semibold text-base underline mt-3 ml-6">Attemp any five question only.</h2>
+            <h2 className="font-semibold text-base underline mt-3 ml-6">Attemp any five question only.</h2>
             {shortQuestions.map((question, index) => {
               return (
                 <div key={index} className="flex mt-4 ml-6">
-                    <div className="flex gap-2 mr-2 w-full">
-                      <span className="font-extrabold">
-                        {String.fromCharCode(65 + index)}.
-                      </span>
+                  <div className="flex gap-2 mr-2 w-full">
+                    <span className="font-extrabold">
+                      {String.fromCharCode(65 + index)}.
+                    </span>
+                    <div>
                       <p className="w-full">
                         {question.text}
                       </p>
+                      {/* Display image also if exists */}
+                      {question.image && (
+                        <div className="w-1/4">
+                          <img src={question.image} alt="Question Image" />
+                        </div>
+                      )}
                     </div>
+                  </div>
                   <div className="flex gap-16 text-sm">
                     <p>({question.maxMarks})</p>
                     <p>{question.unit}</p>
@@ -232,75 +240,107 @@ function QuestionPaper({
           {/* Long Questions */}
           {longQuestions && longQuestions.length == 4 && (
             <>
-            <div className="mt-6 ml-6 text-base font-bold">
-              <h2>LONG QUESTIONS</h2>
-            </div>
+              <div className="mt-6 ml-6 text-base font-bold">
+                <h2>LONG QUESTIONS</h2>
+              </div>
 
-          {/* Questions */}
-          <div>
-            <div className="flex mt-4">
-              <span className="font-extrabold">2.</span>
-              <div className="w-full flex justify-between">
-              <p className="flex">
-                <span className="ml-2 font-extrabold">A. </span>{longQuestions[0].text}
-              </p>
-              <div className="flex gap-16 text-sm">
-                <p>({longQuestions[0].maxMarks})</p>
-                <p>{longQuestions[0].unit}</p>
-                <p>{longQuestions[0].bloomLevel}</p>
-                <p>{longQuestions[0].co}</p>
+              {/* Questions */}
+              <div>
+                <div className="flex mt-4">
+                  <span className="font-extrabold">2.</span>
+                  <div className="w-full flex justify-between">
+                   <div>
+                   <p className="flex">
+                      <span className="ml-2 font-extrabold">A. </span>{longQuestions[0].text}
+                    </p>
+                    {/* Display image also if exists */}
+                    {question.image && (
+                      <div className="w-1/4">
+                        <img src={longQuestions[0].image} alt="Question Image" />
+                      </div>
+                    )}
+                   </div>
+                    <div className="flex gap-16 text-sm">
+                      <p>({longQuestions[0].maxMarks})</p>
+                      <p>{longQuestions[0].unit}</p>
+                      <p>{longQuestions[0].bloomLevel}</p>
+                      <p>{longQuestions[0].co}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <h1 className="text-center font-extrabold">OR</h1>
+              <div>
+                <div className="flex gap-5 mt-4">
+                <div>
+                   <p className="flex">
+                      <span className="ml-2 font-extrabold">A. </span>{longQuestions[1].text}
+                    </p>
+                    {/* Display image also if exists */}
+                    {question.image && (
+                      <div className="w-1/4">
+                        <img src={longQuestions[1].image} alt="Question Image" />
+                      </div>
+                    )}
+                   </div>
+                  <div className="flex gap-16 text-sm">
+                    <p>({longQuestions[1].maxMarks})</p>
+                    <p>{longQuestions[1].unit}</p>
+                    <p>{longQuestions[1].bloomLevel}</p>
+                    <p>{longQuestions[1].co}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-            <h1 className="text-center font-extrabold">OR</h1>
-          <div>
-            <div className="flex gap-5 mt-4">
-              <p className="flex">
-                <span className="ml-4 font-extrabold">B. </span> {longQuestions[1].text}
-              </p>
-              <div className="flex gap-16 text-sm">
-                <p>({longQuestions[1].maxMarks})</p>
-                <p>{longQuestions[1].unit}</p>
-                <p>{longQuestions[1].bloomLevel}</p>
-                <p>{longQuestions[1].co}</p>
-              </div>
-            </div>
-          </div>
 
-          <div>
-            <div className="flex mt-4">
-              <span className="font-extrabold">3.</span>
-              <div className="w-full flex justify-between">
-              <p className="flex">
-                <span className="ml-2 font-extrabold">A. </span>{longQuestions[2].text}
-              </p>
-              <div className="flex gap-16 text-sm">
-                <p>({longQuestions[2].maxMarks})</p>
-                <p>{longQuestions[2].unit}</p>
-                <p>{longQuestions[2].bloomLevel}</p>
-                <p>{longQuestions[2].co}</p>
+              <div>
+                <div className="flex mt-4">
+                  <span className="font-extrabold">3.</span>
+                  <div className="w-full flex justify-between">
+                  <div>
+                   <p className="flex">
+                      <span className="ml-2 font-extrabold">A. </span>{longQuestions[2].text}
+                    </p>
+                    {/* Display image also if exists */}
+                    {question.image && (
+                      <div className="w-1/4">
+                        <img src={longQuestions[2].image} alt="Question Image" />
+                      </div>
+                    )}
+                   </div>
+                    <div className="flex gap-16 text-sm">
+                      <p>({longQuestions[2].maxMarks})</p>
+                      <p>{longQuestions[2].unit}</p>
+                      <p>{longQuestions[2].bloomLevel}</p>
+                      <p>{longQuestions[2].co}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <h1 className="text-center font-extrabold">OR</h1>
+              <div>
+                <div className="flex gap-5 mt-4">
+                <div>
+                   <p className="flex">
+                      <span className="ml-2 font-extrabold">A. </span>{longQuestions[3].text}
+                    </p>
+                    {/* Display image also if exists */}
+                    {question.image && (
+                      <div className="w-1/4">
+                        <img src={longQuestions[3].image} alt="Question Image" />
+                      </div>
+                    )}
+                   </div>
+                  <div className="flex gap-16 text-sm">
+                    <p>({longQuestions[3].maxMarks})</p>
+                    <p>{longQuestions[3].unit}</p>
+                    <p>{longQuestions[3].bloomLevel}</p>
+                    <p>{longQuestions[3].co}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-            <h1 className="text-center font-extrabold">OR</h1>
-          <div>
-            <div className="flex gap-5 mt-4">
-              <p className="flex">
-                <span className="ml-4 font-extrabold">B. </span> {longQuestions[3].text}
-              </p>
-              <div className="flex gap-16 text-sm">
-                <p>({longQuestions[3].maxMarks})</p>
-                <p>{longQuestions[3].unit}</p>
-                <p>{longQuestions[3].bloomLevel}</p>
-                <p>{longQuestions[3].co}</p>
-              </div>
-            </div>
-          </div>
-          </>
+            </>
           )}
-          
+
 
           {/* Print Button */}
           <div className="flex justify-around mt-8 mb-5">

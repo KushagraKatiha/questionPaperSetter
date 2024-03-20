@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import QuestionPaper from './QuestionPaper'
+import '../App.css'
 
 function QuestionSetter() {
   // Variables
@@ -18,13 +19,22 @@ function QuestionSetter() {
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');
-  const [view, setView] = useState('visible')
+  const [view, setView] = useState('hidden')
+  const [image, setImage] = useState(null);
+  const [addImage, setAddImage] = useState(false);
 
   // Functions
 
- 
+  const handleAddImage = () => {
+    setAddImage(!addImage);
+  };
+  // Function to allow user to add image to the question
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setImage(selectedImage);
+  };
 
-
+  // Function to handle exam name
   const handleExamName = (e) => {
     setExamName(e.target.value)
   }
@@ -102,6 +112,8 @@ function QuestionSetter() {
         unit: unit,
         bloomLevel: bloomLevel,
         co: co,
+        // Add image if it exists
+        image: image ? URL.createObjectURL(image) : null,
       };
       if (questionType === 'long') {
         setLongQuestions((prevLongQuestions) => [...prevLongQuestions, question]);
@@ -115,6 +127,7 @@ function QuestionSetter() {
       setUnit('');
       setBloomLevel('');
       setCo('');
+      setAddImage(false);
     } else {
       alert('You can only add 8 short and 4 long questions');
     }
@@ -326,10 +339,20 @@ function QuestionSetter() {
           </div>
 
           <div className='text-center'>
-            <h2 className='font-bold text-xl'>Question Text</h2>
-            {/* Textarea to set question */}
-            <textarea value={questionText} onChange={handleQuestionText} className='mt-3 border-2 border-[#9c36b5] rounded-lg bg-black text-white p-3 resize-none focus:outline-none' rows={8} cols={50} placeholder='Enter question...' />
-
+            <div className='flex flex-col'>
+              <div className='flex gap-5 justify-between items-center w-full'>
+                <button className='bg-black mb-2 border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddImage}>
+                  Add Image
+                </button>
+                {/* Create a custom button to trigger file input */}
+                <label className={addImage? "visible custom-file-upload": "hidden custom-file-upload"} >
+                  Choose File
+                  <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+                </label>
+              </div>
+              {/* Textarea to set question */}
+              <textarea value={questionText} onChange={handleQuestionText} className='mt-3 border-2 border-[#9c36b5] rounded-lg bg-black text-white p-3 resize-none focus:outline-none' rows={8} cols={50} placeholder='Enter question...' />
+            </div>
             {/* Container to put add and done buttons */}
             <div className='flex'>
               <button className='bg-black border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddQuestion}>Add</button>
@@ -359,11 +382,7 @@ function QuestionSetter() {
         </div>
       </div>
 
-      <QuestionPaper examName={examName} selectedPrograms={selectedPrograms} semester={semester} year={year} courseCode={courseCode} courseName={courseName} view={view} />
-
-      <button onClick={()=>{
-        generateDocxTemplate(<QuestionPaper examName={examName} selectedPrograms={selectedPrograms} semester={semester} year={year} courseCode={courseCode} courseName={courseName} view={view} />)
-      }}>Generate DOCX</button>
+      <QuestionPaper examName={examName} selectedPrograms={selectedPrograms} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions} longQuestions={longQuestions} view={view} />
 
     </>
   )
