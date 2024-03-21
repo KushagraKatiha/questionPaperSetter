@@ -19,7 +19,7 @@ function QuestionSetter() {
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');
-  const [view, setView] = useState('hidden')
+  const [view, setView] = useState('visible')
   const [image, setImage] = useState(null);
   const [addImage, setAddImage] = useState(false);
 
@@ -102,7 +102,7 @@ function QuestionSetter() {
 
   const handleAddQuestion = () => {
     if (
-      (questionType === 'short' && shortQuestions.length < 8) ||
+      (questionType === 'short' && shortQuestions.length < 4) ||
       (questionType === 'long' && longQuestions.length < 4)
     ) {
       const marks = questionType === 'long' ? 10 : 2;

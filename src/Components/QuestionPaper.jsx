@@ -209,18 +209,18 @@ function QuestionPaper({
             <h2 className="font-semibold text-base underline mt-3 ml-6">Attemp any five question only.</h2>
             {shortQuestions.map((question, index) => {
               return (
-                <div key={index} className="flex mt-4 ml-6">
-                  <div className="flex gap-2 mr-2 w-full">
+                <div key={index} className="flex gap-2">
+                  <div className="flex gap-2">
                     <span className="font-extrabold">
                       {String.fromCharCode(65 + index)}.
                     </span>
                     <div>
-                      <p className="w-full">
+                      <p>
                         {question.text}
                       </p>
                       {/* Display image also if exists */}
                       {question.image && (
-                        <div className="w-1/4">
+                        <div className="w-1/2">
                           <img src={question.image} alt="Question Image" />
                         </div>
                       )}
@@ -254,8 +254,8 @@ function QuestionPaper({
                       <span className="ml-2 font-extrabold">A. </span>{longQuestions[0].text}
                     </p>
                     {/* Display image also if exists */}
-                    {question.image && (
-                      <div className="w-1/4">
+                    {longQuestions[0].image && (
+                      <div className="ml-2 w-1/2">
                         <img src={longQuestions[0].image} alt="Question Image" />
                       </div>
                     )}
@@ -274,11 +274,11 @@ function QuestionPaper({
                 <div className="flex gap-5 mt-4">
                 <div>
                    <p className="flex">
-                      <span className="ml-2 font-extrabold">A. </span>{longQuestions[1].text}
+                      <span className="ml-2 font-extrabold">B. </span>{longQuestions[1].text}
                     </p>
                     {/* Display image also if exists */}
-                    {question.image && (
-                      <div className="w-1/4">
+                    {longQuestions[1].image && (
+                      <div className="ml-5 w-1/2">
                         <img src={longQuestions[1].image} alt="Question Image" />
                       </div>
                     )}
@@ -301,8 +301,8 @@ function QuestionPaper({
                       <span className="ml-2 font-extrabold">A. </span>{longQuestions[2].text}
                     </p>
                     {/* Display image also if exists */}
-                    {question.image && (
-                      <div className="w-1/4">
+                    {longQuestions[2].image && (
+                      <div className="ml-2 w-1/2">
                         <img src={longQuestions[2].image} alt="Question Image" />
                       </div>
                     )}
@@ -321,11 +321,11 @@ function QuestionPaper({
                 <div className="flex gap-5 mt-4">
                 <div>
                    <p className="flex">
-                      <span className="ml-2 font-extrabold">A. </span>{longQuestions[3].text}
+                      <span className="ml-2 font-extrabold">B. </span>{longQuestions[3].text}
                     </p>
                     {/* Display image also if exists */}
-                    {question.image && (
-                      <div className="w-1/4">
+                    {longQuestions[3].image && (
+                      <div className="ml-5 w-1/2">
                         <img src={longQuestions[3].image} alt="Question Image" />
                       </div>
                     )}
