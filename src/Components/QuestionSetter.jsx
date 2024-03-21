@@ -19,7 +19,7 @@ function QuestionSetter() {
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');
-  const [view, setView] = useState('visible')
+  const [view, setView] = useState('hidden')
   const [image, setImage] = useState(null);
   const [addImage, setAddImage] = useState(false);
 
