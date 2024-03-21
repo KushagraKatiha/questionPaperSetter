@@ -102,7 +102,7 @@ function QuestionSetter() {
 
   const handleAddQuestion = () => {
     if (
-      (questionType === 'short' && shortQuestions.length < 4) ||
+      (questionType === 'short' && shortQuestions.length < 8) ||
       (questionType === 'long' && longQuestions.length < 4)
     ) {
       const marks = questionType === 'long' ? 10 : 2;
@@ -128,6 +128,7 @@ function QuestionSetter() {
       setBloomLevel('');
       setCo('');
       setAddImage(false);
+      setImage(null);
     } else {
       alert('You can only add 8 short and 4 long questions');
     }
