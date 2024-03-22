@@ -23,7 +23,7 @@ function QuestionSetter() {
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');
-  const [view, setView] = useState('visible')
+  const [view, setView] = useState('hidden')
   const bottomRef = useRef(null); // Reference to the bottom element
 
   const toolbarOptions = [
