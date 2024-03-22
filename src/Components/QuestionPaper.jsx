@@ -50,7 +50,7 @@ function QuestionPaper({
 
   return (
     <>
-      <div style={{ backgroundImage: 'linear-gradient(to right, #f4e7ff, #a77ed6)' }}
+      <div style={{ backgroundImage: 'linear-gradient(to right, #f4e7ff, #a77ed6)'}}
         id="questionPaper"
         className={`text-black mt-20 w-full h-full flex flex-col items-center justify-center mb-8 ${view}`}
       >
@@ -135,11 +135,18 @@ function QuestionPaper({
             {shortQuestions.map((question, index) => {
               return (
                 <div key={index} className="ml-4 flex justify-between gap-3 items-center mb-3">
-                  <div className="flex gap-3">
+                  <div className="flex flex-col">
+                  <div className="flex gap-1">
                     <span className="font-medium text-xs">
                       {String.fromCharCode(65 + index)}.
                     </span>
                     <div className="text-xs" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
+                  </div>
+                  {question.image && (
+                    <div className="ml-4 w-1/2">
+                      <img src={question.image} className="h-[150px]" alt="Question Image" />
+                    </div>
+                  )}
                   </div>
                   <div className="flex gap-8 text-xs">
                     <p>({question.maxMarks})</p>
@@ -164,11 +171,17 @@ function QuestionPaper({
                 <div className="flex mt-1">
                   <span className="font-bold text-sm">2.</span>
                   <div className="w-full flex gap-3 justify-between">
-
+                  <div className="flex flex-col">
                     <div className="flex text-xs ">
                       <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
                     </div>
+                    {longQuestions[0].image && (
+                      <div className="ml-6 w-1/2">
+                        <img src={longQuestions[0].image} alt="Question Image" />
+                      </div>
+                    )}
 
+                    </div>
                     <div className="flex gap-8 text-xs">
                       <p>({longQuestions[0].maxMarks})</p>
                       <p>{longQuestions[0].unit}</p>
@@ -182,8 +195,16 @@ function QuestionPaper({
               <div>
                 <div className="flex ml-3">
                   <div className="w-full flex gap-3 justify-between">
+                    <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
+                    </div>
+
+                    {longQuestions[1].image && (
+                      <div className="ml-6 w-1/2">
+                        <img src={longQuestions[1].image} alt="Question Image" />
+                      </div>
+                    )}
                     </div>
                     <div className="flex gap-8 text-xs">
                       <p>({longQuestions[1].maxMarks})</p>
@@ -199,8 +220,16 @@ function QuestionPaper({
                 <div className="flex mt-5">
                   <span className="font-bold text-sm">3.</span>
                   <div className="w-full flex gap-3 justify-between">
+                  <div className="flex flex-col">
                     <div className="flex text-xs ">
                       <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
+                    </div>
+
+                    {longQuestions[2].image && (
+                      <div className="ml-6 w-1/2">
+                        <img src={longQuestions[2].image} alt="Question Image" />
+                      </div>
+                    )}
                     </div>
                     <div className="flex gap-8 text-xs">
                       <p>({longQuestions[2].maxMarks})</p>
@@ -215,8 +244,16 @@ function QuestionPaper({
               <div>
                 <div className="flex ml-3">
                   <div className="w-full flex gap-3 justify-between">
+                  <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                    </div>
+
+                    {longQuestions[3].image && (
+                      <div className="ml-6 w-1/2">
+                        <img src={longQuestions[3].image} alt="Question Image" />
+                      </div>
+                    )}
                     </div>
                     <div className="flex gap-8 text-xs">
                       <p>({longQuestions[3].maxMarks})</p>
@@ -334,11 +371,18 @@ function QuestionPaper({
             {shortQuestions.map((question, index) => {
               return (
                 <div key={index} className="ml-4 flex justify-between gap-3 items-center mb-3">
-                  <div className="flex gap-3">
+                  <div className="flex flex-col">
+                  <div className="flex gap-1">
                     <span className="font-medium text-xs">
                       {String.fromCharCode(65 + index)}.
                     </span>
                     <div className="text-xs" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
+                  </div>
+                  {question.image && (
+                    <div className="ml-4 w-1/2">
+                      <img src={question.image} className="h-[150px]" alt="Question Image" />
+                    </div>
+                  )}
                   </div>
                   <div className="flex gap-8 text-xs">
                     <p>({question.maxMarks})</p>
@@ -363,11 +407,17 @@ function QuestionPaper({
                 <div className="flex mt-1">
                   <span className="font-bold text-sm">2.</span>
                   <div className="w-full flex gap-3 justify-between">
-
+                  <div className="flex flex-col">
                     <div className="flex text-xs ">
                       <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
                     </div>
+                    {longQuestions[0].image && (
+                      <div className="ml-6 w-1/2">
+                        <img src={longQuestions[0].image} alt="Question Image" />
+                      </div>
+                    )}
 
+                    </div>
                     <div className="flex gap-8 text-xs">
                       <p>({longQuestions[0].maxMarks})</p>
                       <p>{longQuestions[0].unit}</p>
@@ -381,8 +431,16 @@ function QuestionPaper({
               <div>
                 <div className="flex ml-3">
                   <div className="w-full flex gap-3 justify-between">
+                    <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
+                    </div>
+
+                    {longQuestions[1].image && (
+                      <div className="ml-6 w-1/2">
+                        <img src={longQuestions[1].image} alt="Question Image" />
+                      </div>
+                    )}
                     </div>
                     <div className="flex gap-8 text-xs">
                       <p>({longQuestions[1].maxMarks})</p>
@@ -398,8 +456,16 @@ function QuestionPaper({
                 <div className="flex mt-5">
                   <span className="font-bold text-sm">3.</span>
                   <div className="w-full flex gap-3 justify-between">
+                  <div className="flex flex-col">
                     <div className="flex text-xs ">
                       <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
+                    </div>
+
+                    {longQuestions[2].image && (
+                      <div className="ml-6 w-1/2">
+                        <img src={longQuestions[2].image} alt="Question Image" />
+                      </div>
+                    )}
                     </div>
                     <div className="flex gap-8 text-xs">
                       <p>({longQuestions[2].maxMarks})</p>
@@ -414,8 +480,16 @@ function QuestionPaper({
               <div>
                 <div className="flex ml-3">
                   <div className="w-full flex gap-3 justify-between">
+                  <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                    </div>
+
+                    {longQuestions[3].image && (
+                      <div className="ml-6 w-1/2">
+                        <img src={longQuestions[3].image} alt="Question Image" />
+                      </div>
+                    )}
                     </div>
                     <div className="flex gap-8 text-xs">
                       <p>({longQuestions[3].maxMarks})</p>
@@ -428,25 +502,6 @@ function QuestionPaper({
               </div>
             </>
           )}
-
-
-          {/* Print Button */}
-          <div className="flex justify-around mt-8 mb-5">
-            <button
-              className="bg-green-500 text-white px-4 py-2 rounded-lg mt-4"
-              onClick={handlePrint}
-            >
-              Print
-            </button>
-
-            {/* Done Button */}
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 ml-4"
-              onClick={handleDone}
-            >
-              Done
-            </button>
-          </div>
         </div>
       </div>
     </>

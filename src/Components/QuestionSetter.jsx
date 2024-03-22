@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
+import '../App.css'
 import QuestionPaper from './QuestionPaper'
-import 'froala-editor/css/froala_style.min.css';
-import 'froala-editor/css/froala_editor.pkgd.min.css';
-import FroalaEditor from 'react-froala-wysiwyg';
-import 'froala-editor/js/plugins/image.min.js';
-import 'froala-editor/js/plugins/table.min.js';
-import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 function QuestionSetter() {
   // Variables
+  const [image, setImage] = useState(null);
+  const [addImage, setAddImage] = useState(false);
   const [model, setModel] = useState('')
   const [examName, setExamName] = useState('')
   const [selectedPrograms, setSelectedPrograms] = useState([])
@@ -23,18 +23,34 @@ function QuestionSetter() {
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');
-  const [view, setView] = useState('hidden')
+  const [view, setView] = useState('visible')
   const bottomRef = useRef(null); // Reference to the bottom element
 
-  const config = {
-    placeholderText: 'Edit Your Content Here!',
-    charCounterCount: false,
-    width: '100%',
-    height: '100%',
-  }
-
+  const toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+    ['blockquote', 'code-block'],
+  
+    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  
+    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  
+    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+    [{ 'font': [] }],
+    [{ 'align': [] }]
+  ];
   // Functions
 
+  const handleAddImage = () => {
+    setAddImage(!addImage);
+  };
+
+  // Function to allow user to add image to the question
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setImage(selectedImage);
+  };
 
   // Function to handle exam name
   const handleExamName = (e) => {
@@ -100,7 +116,7 @@ function QuestionSetter() {
 
   const handleAddQuestion = () => {
     // Check if the question type is not selected
-    if(questionType === 'choose') {
+    if (questionType === 'choose') {
       alert('Please select the question type');
       return; // Exit the function early
     }
@@ -121,7 +137,8 @@ function QuestionSetter() {
         maxMarks: marks,
         unit: unit,
         bloomLevel: bloomLevel,
-        co: co
+        co: co,
+        image: image ? URL.createObjectURL(image) : null,
       };
       if (questionType === 'long') {
         setLongQuestions((prevLongQuestions) => [...prevLongQuestions, question]);
@@ -134,7 +151,9 @@ function QuestionSetter() {
       setUnit('');
       setBloomLevel('');
       setCo('');
-      setModel('');     // Clear the content of the Froala Editor
+      setModel('');   
+      setImage(null);   // Clear the selected image
+      setAddImage(false);
     } else {
       alert('You can only add 8 short and 4 long questions');
     }
@@ -360,18 +379,23 @@ function QuestionSetter() {
           </div>
 
           <div className='text-center w-4/5 flex flex-col gap-1'>
+
+            <div className='flex gap-5 justify-between items-center w-full'>
+              <button className='bg-black mb-2 border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddImage}>
+                Add Image
+              </button>
+              {/* Create a custom button to trigger file input */}
+              <label className={addImage ? "visible custom-file-upload" : "hidden custom-file-upload"} >
+                Choose File
+                <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+              </label>
+            </div>
+
             <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
-              <FroalaEditor
-                model={model}
-                onModelChange={(e) => setModel(e)}
-                tag='textarea'
-                config={config}
-              />
+              
+              <ReactQuill modules={{toolbar: toolbarOptions}} className='bg-white text-black p-4' theme="snow" value={model} onChange={setModel} />
             </div>
-            <div className='bg-black p-4 text-white text-left border-[#9c36b5] border-2 rounded-lg font-normal'>
-              <h1 className='text-white font-semibold text-center'>Question Preview</h1>
-              <FroalaEditorView model={model} />
-            </div>
+            
             {/* Container to put add and done buttons */}
             <div className='flex'>
               <button className='bg-black border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddQuestion}>Add</button>
