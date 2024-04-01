@@ -9,6 +9,7 @@ function QuestionPaper({
   courseName,
   shortQuestions,
   longQuestions,
+  otherProgram,
   view
 }) {
 
@@ -73,7 +74,7 @@ function QuestionPaper({
             >
               {examName}
             </h2>
-            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}</h2>
+            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}/{otherProgram}</h2>
           </div>
 
           {/* Exam Details Table */}
@@ -309,7 +310,7 @@ function QuestionPaper({
             >
               {examName}
             </h2>
-            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}</h2>
+            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}/{otherProgram}</h2>
           </div>
 
           {/* Exam Details Table */}
@@ -501,7 +502,7 @@ function QuestionPaper({
                 </div>
               </div>
             </>
-          )}
+          )}        
         </div>
       </div>
     </>

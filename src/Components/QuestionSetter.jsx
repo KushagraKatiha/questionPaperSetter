@@ -17,13 +17,14 @@ function QuestionSetter() {
   const [year, setYear] = useState('')
   const [courseCode, setCourseCode] = useState('')
   const [courseName, setCourseName] = useState('')
+  const [otherProgram, setOtherProgram] = useState('')
   const [shortQuestions, setShortQuestions] = useState([])
   const [longQuestions, setLongQuestions] = useState([])
   const [questionType, setQuestionType] = useState('choose');
   const [unit, setUnit] = useState('');
   const [bloomLevel, setBloomLevel] = useState('');
   const [co, setCo] = useState('');
-  const [view, setView] = useState('hidden')
+  const [view, setView] = useState('view')
   const bottomRef = useRef(null); // Reference to the bottom element
 
   const toolbarOptions = [
@@ -92,6 +93,10 @@ function QuestionSetter() {
 
   const handleCourseCode = (e) => {
     setCourseCode(e.target.value)
+  }
+
+  const handleOtherProgram = (e) => {
+    setOtherProgram(e.target.value)
   }
 
   const handleCourseName = (e) => {
@@ -203,7 +208,7 @@ function QuestionSetter() {
               </div>
 
               {/* Container to set program name */}
-              <div className='flex flex-col'>
+              <div className='flex flex-col gap-4'>
                 {/* Display selected programs */}
                 <div className='flex flex-wrap gap-2 '>
                   {selectedPrograms.map((program, index) => (
@@ -218,6 +223,7 @@ function QuestionSetter() {
                     </div>
                   ))}
                 </div>
+
                 <div className='w-full'>
                   <h2 className='font-bold text-lg'>Program Name</h2>
                   {/* Dropdown to select program names */}
@@ -257,6 +263,16 @@ function QuestionSetter() {
                     <option value="M.Sc.-DS">M.Sc.- Data Science (From Session 2023-24 Onwards)</option>
                   </select>
                 </div>
+              
+                <div>
+                  <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg'
+                    type="text"
+                    placeholder='Other Program...'
+                    value={otherProgram}
+                    onChange={handleOtherProgram}
+                  />
+                </div>
+                
               </div>
             </div>
 
@@ -429,7 +445,7 @@ function QuestionSetter() {
         </div>
       </div>
 
-      <QuestionPaper examName={examName} selectedPrograms={selectedPrograms} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions} longQuestions={longQuestions} view={view} />
+      <QuestionPaper examName={examName} selectedPrograms={selectedPrograms} otherProgram={otherProgram} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions} longQuestions={longQuestions} view={view} />
 
     </>
   )
