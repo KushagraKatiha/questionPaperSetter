@@ -10,7 +10,7 @@ function QuestionSetter() {
   // Variables
   const [image, setImage] = useState(null);
   const [addImage, setAddImage] = useState(false);
-  const [model, setModel] = useState('')
+  const [model, setModel] = useState(null)
   const [examName, setExamName] = useState('')
   const [selectedPrograms, setSelectedPrograms] = useState([])
   const [semester, setSemester] = useState('')
@@ -21,9 +21,9 @@ function QuestionSetter() {
   const [shortQuestions, setShortQuestions] = useState([])
   const [longQuestions, setLongQuestions] = useState([])
   const [questionType, setQuestionType] = useState('choose');
-  const [unit, setUnit] = useState('');
-  const [bloomLevel, setBloomLevel] = useState('');
-  const [co, setCo] = useState('');
+  const [unit, setUnit] = useState('-');
+  const [bloomLevel, setBloomLevel] = useState('-');
+  const [co, setCo] = useState('-');
   const [view, setView] = useState('hidden')
   const bottomRef = useRef(null); // Reference to the bottom element
 
@@ -132,6 +132,12 @@ function QuestionSetter() {
       return; // Exit the function early
     }
 
+    // Check if the question is not empty
+    if (model == null || model === '<p><br></p>') {
+      alert('Please enter the question');
+      return; // Exit the function early
+    }
+
     if (
       (questionType === 'short' && shortQuestions.length < 8) ||
       (questionType === 'long' && longQuestions.length < 4)
@@ -152,11 +158,12 @@ function QuestionSetter() {
         setShortQuestions([...shortQuestions, question]);
         alert(`${shortQuestions.length + 1} Short question added`);
       }
+
       setQuestionType('choose');
       setUnit('');
       setBloomLevel('');
       setCo('');
-      setModel('');   
+      setModel(null);   
       setImage(null);   // Clear the selected image
       setAddImage(false);
     } else {

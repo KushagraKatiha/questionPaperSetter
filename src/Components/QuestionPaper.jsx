@@ -26,7 +26,7 @@ function QuestionPaper({
   const handleDone = () => {
     window.location.reload();
   }
-
+  
   const handlePrint = () => {
     const printContent = document.getElementById("printContent").innerHTML;
     const originalContent = document.body.innerHTML;
@@ -47,8 +47,6 @@ function QuestionPaper({
     document.getElementById("printContent").style.display = "none";
   };
 
-
-
   return (
     <>
       <div style={{ backgroundImage: 'linear-gradient(to right, #f4e7ff, #a77ed6)'}}
@@ -65,16 +63,16 @@ function QuestionPaper({
           {/* College Name, Exam Name, Program Name */}
           <div className="mt-4 text-black flex flex-col items-center justify-center">
             <h1 className="font-bold text-base text-center">
-              College of Computing Sciences and Information Techonology
+              College of Computing Sciences and Information Technology
             </h1>
 
             <h2
               style={{ fontStyle: "italic" }}
               className="text-base font-extrabold"
             >
-              {examName}
+              {examName.toUpperCase()}
             </h2>
-            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}/{otherProgram}</h2>
+            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}{otherProgram?"/": " "}{otherProgram.toUpperCase()}</h2>
           </div>
 
           {/* Exam Details Table */}
@@ -92,10 +90,10 @@ function QuestionPaper({
                 </tr>
                 <tr className="border-black border-2">
                   <td colSpan={2} className="px-2 border-black border-2">
-                    Course Code: {courseCode}
+                    Course Code: {courseCode.toString().toUpperCase()}
                   </td>
                   <td className="px-2 border-black border-2">
-                    Course Name: {courseName}
+                    Course Name: {courseName.toUpperCase()}
                   </td>
                 </tr>
                 <tr className="border-black border-2">
@@ -141,7 +139,7 @@ function QuestionPaper({
                     <span className="font-medium text-xs">
                       {String.fromCharCode(65 + index)}.
                     </span>
-                    <div className="text-xs" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
+                    <div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
                   </div>
                   {question.image && (
                     <div className="ml-4 w-1/2">
@@ -174,7 +172,7 @@ function QuestionPaper({
                   <div className="w-full flex gap-3 justify-between">
                   <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
                     </div>
                     {longQuestions[0].image && (
                       <div className="ml-6 w-1/2">
@@ -198,7 +196,7 @@ function QuestionPaper({
                   <div className="w-full flex gap-3 justify-between">
                     <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
                     </div>
 
                     {longQuestions[1].image && (
@@ -223,7 +221,7 @@ function QuestionPaper({
                   <div className="w-full flex gap-3 justify-between">
                   <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
                     </div>
 
                     {longQuestions[2].image && (
@@ -247,7 +245,7 @@ function QuestionPaper({
                   <div className="w-full flex gap-3 justify-between">
                   <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
                     </div>
 
                     {longQuestions[3].image && (
@@ -291,7 +289,7 @@ function QuestionPaper({
 
       <div id="printContent" className="hidden">
         {/* Add your content here that you want to print */}
-        <div className="px-12 bg-white h-5/6 w-full">
+        <div className="px-12 py-8 bg-white h-full w-full">
           {/* College Banner Container */}
           {/* College Banner */}
           <div className="bg-black mt-5">
@@ -301,16 +299,16 @@ function QuestionPaper({
           {/* College Name, Exam Name, Program Name */}
           <div className="mt-4 text-black flex flex-col items-center justify-center">
             <h1 className="font-bold text-base text-center">
-              College of Computing Sciences and Information Techonology
+              College of Computing Sciences and Information Technology
             </h1>
 
             <h2
               style={{ fontStyle: "italic" }}
               className="text-base font-extrabold"
             >
-              {examName}
+              {examName.toUpperCase()}
             </h2>
-            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}/{otherProgram}</h2>
+            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}/{otherProgram.toUpperCase()}</h2>
           </div>
 
           {/* Exam Details Table */}
@@ -328,10 +326,10 @@ function QuestionPaper({
                 </tr>
                 <tr className="border-black border-2">
                   <td colSpan={2} className="px-2 border-black border-2">
-                    Course Code: {courseCode}
+                    Course Code: {courseCode.toString().toUpperCase()}
                   </td>
                   <td className="px-2 border-black border-2">
-                    Course Name: {courseName}
+                    Course Name: {courseName.toUpperCase()}
                   </td>
                 </tr>
                 <tr className="border-black border-2">
@@ -377,7 +375,7 @@ function QuestionPaper({
                     <span className="font-medium text-xs">
                       {String.fromCharCode(65 + index)}.
                     </span>
-                    <div className="text-xs" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
+                    <div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
                   </div>
                   {question.image && (
                     <div className="ml-4 w-1/2">
@@ -410,7 +408,7 @@ function QuestionPaper({
                   <div className="w-full flex gap-3 justify-between">
                   <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
                     </div>
                     {longQuestions[0].image && (
                       <div className="ml-6 w-1/2">
@@ -434,7 +432,7 @@ function QuestionPaper({
                   <div className="w-full flex gap-3 justify-between">
                     <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
                     </div>
 
                     {longQuestions[1].image && (
@@ -459,7 +457,7 @@ function QuestionPaper({
                   <div className="w-full flex gap-3 justify-between">
                   <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
                     </div>
 
                     {longQuestions[2].image && (
@@ -483,7 +481,7 @@ function QuestionPaper({
                   <div className="w-full flex gap-3 justify-between">
                   <div className="flex flex-col">
                     <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
                     </div>
 
                     {longQuestions[3].image && (
@@ -502,7 +500,7 @@ function QuestionPaper({
                 </div>
               </div>
             </>
-          )}        
+          )}
         </div>
       </div>
     </>
