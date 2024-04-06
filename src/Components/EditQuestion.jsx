@@ -22,9 +22,6 @@ function EditQuestion() {
     const longQuestions = JSON.parse(localStorage.getItem('longQuestions')) || [];
     const shortQuestions = JSON.parse(localStorage.getItem('shortQuestions')) || [];
 
-    console.log("long questions: ", longQuestions);
-    console.log("short questions: ", shortQuestions);
-
     // Variables
     const [questionType, setQuestionType] = useState('choose');
     const [questionNumber, setQuestionNumber] = useState(1);
@@ -51,15 +48,14 @@ function EditQuestion() {
         setLongQuestionSubType(twoParts);
     }, [ques]);
 
-    console.log(subQues1);
-    console.log(subQues2);
-    console.log(twoParts);
-
     const [image, setImage] = useState(null);
     const [addImage, setAddImage] = useState(false);
     const [questionText, setQuestionText] = useState(null)
     // long question will have subtype, if subtype is 1 then do nothing, if subtype is 2 two question of 5 makrs each
     const [longQuestionSubType, setLongQuestionSubType] = useState(twoParts)
+    useEffect(()=>{
+        console.log("lonQuestionSubType", longQuestionSubType);
+    }, [longQuestionSubType])
     const [subQuestion1, setSubQuestion1] = useState(null)
     const [subQuestion2, setSubQuestion2] = useState(null)
     // long question with sub question
@@ -89,7 +85,6 @@ function EditQuestion() {
     const [quesImg, setQuesImg] = useState(null)
     useEffect(() => {
         setQuesImg(questionType === 'long' ? longQuestions[questionNumber-1]?.image : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.image : null);
-        console.log(quesImg);
         setImgBtn(quesImg != null ? 'Change Image' : 'Add Image')
     }, [questionType, questionNumber, shortQuestions])
 
@@ -196,14 +191,14 @@ function EditQuestion() {
             image: image ? URL.createObjectURL(image) : null,
         };
         setLongQuestion({ ...longQuestion, subQuestion2: question });
-        setSubQuestion2(null);
+        // setSubQuestion2(null);
         setImage(null);   // Clear the selected image
         setAddImage(false);
         alert('Short Question 2 added')
     }
 
     const handleUpdateQuestion = () => {
-        // Get the question number from the dropdown box
+
         const quesNumber = questionNumber;
 
         // Determine the storage based on the question type
@@ -280,20 +275,15 @@ function EditQuestion() {
         alert('Question updated successfully');
     };
 
-    useEffect(() => {
-        console.log(image);
-    }, [image]);
-
     const handleDone = () => {
         navigate('/format')
     }
 
-
     useEffect(() => {
-        const longQuestions = localStorage.getItem('longQuestions')
-        const shortQuestions = localStorage.getItem('shortQuestions')
-        console.log(`Long Questions:- ${longQuestions}`)
-        console.log(`Short Questions:- ${shortQuestions}`)
+        const longQuestions = JSON.parse(localStorage.getItem('longQuestions'))
+        const shortQuestions = JSON.parse(localStorage.getItem('shortQuestions'))
+        console.log('Long Questions:- ',longQuestions)
+        console.log('Short Questions:- ',shortQuestions)
     }, [])
 
     return (
@@ -361,7 +351,6 @@ function EditQuestion() {
                                 <h2 className='font-bold text-white text-base'>Two Parts Needed ?</h2>
                                 {/* Dropdown to set question type */}
                                 <select className='focus:outline-none h-8 text-white px-1 py-1 bg-black border-[#9c36b5] border-2 rounded-lg' value={longQuestionSubType} onChange={handleLongQuestionSubType}>
-                                    <option value={twoParts}>{(twoParts == 1)? "No": "Yes"}</option>
                                     <option value="1">No</option>
                                     <option value="2">Yes</option>
                                 </select>
@@ -419,7 +408,7 @@ function EditQuestion() {
                     {/* Container to set question */}
                     {/* If long questions sub type is two add two questions of 5 marks each*/}
 
-                    {questionType === 'long' && longQuestionSubType === '2' ? (
+                    {(questionType === 'long' && longQuestionSubType === '2') || (questionType === 'long' && twoParts === 2) ? (
                         <div className='flex flex-col justify-center items-center w-full'>
                             {/* Long Sub Question 1 container */}
                             <div className='text-center w-11/12 flex flex-col gap-1'>

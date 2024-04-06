@@ -494,7 +494,7 @@ function QuestionPaper({}) {
 
       <div id="printContent" className="hidden">
         {/* Add your content here that you want to print */}
-        <div className="px-12 bg-white h-5/6 w-1/2">
+        <div className="px-12 bg-white h-5/6 w-full">
           {/* College Banner Container */}
           {/* College Banner */}
           <div className="bg-black mt-5">
@@ -867,7 +867,7 @@ function QuestionPaper({}) {
                     <div className="w-full flex gap-3 justify-between">
                       <div className="flex flex-col">
                         <div className="flex text-xs ">
-                          <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                          <span className="ml-5 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
                         </div>
                         {longQuestions[3].image && (
                           <div className="ml-6 w-1/2">
@@ -886,7 +886,7 @@ function QuestionPaper({}) {
                   )}
                 </div>
             </>
-          )}  
+          )}
         </div>
       </div>
     </>

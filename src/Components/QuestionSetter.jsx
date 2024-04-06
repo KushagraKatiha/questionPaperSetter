@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
 
 function QuestionSetter() {
+
   // Variables
   const [image, setImage] = useState(null);
   const [addImage, setAddImage] = useState(false);
@@ -24,6 +25,7 @@ function QuestionSetter() {
   const [longQuestionSubType, setLongQuestionSubType] = useState(1)
   const [subQuestion1, setSubQuestion1] = useState(null)
   const [subQuestion2, setSubQuestion2] = useState(null)
+  const [selectedImage, setSelectedImage] = useState(null);
 
   // long question with sub question
   const [longQuestion, setLongQuestion] = useState({})
@@ -35,7 +37,7 @@ function QuestionSetter() {
 
   // Navigate to the next page
   const navigate = useNavigate();
-  
+
   const handlePreview = () => {
     if (shortQuestions.length === 8 && longQuestions.length === 4) {
       // Navigate to the next page
@@ -57,7 +59,7 @@ function QuestionSetter() {
 
   // Print long questions and short questions from local storage when the component mounts
 
-    // Save Exams Details into the local storage
+  // Save Exams Details into the local storage
   useEffect(() => {
     localStorage.setItem('examName', JSON.stringify(examName));
     localStorage.setItem('selectedPrograms', JSON.stringify(selectedPrograms));
@@ -87,13 +89,21 @@ function QuestionSetter() {
 
   const handleAddImage = () => {
     setAddImage(!addImage);
+    // Clear previously selected image
+    setSelectedImage(null);
+  };
+
+  const handleRemoveImage = () => {
+    setImage(null); // Clear the selected image
+    setSelectedImage(null); // Clear the selected image from state
   };
 
   // Function to allow user to add image to the question
-  const handleImageChange = (e) => {
-    const selectedImage = e.target.files[0];
-    setImage(selectedImage);
-  };
+const handleImageChange = (e) => {
+  const selectedImage = e.target.files[0];
+  setImage(selectedImage); // Update state with selected image
+  setSelectedImage(selectedImage); // Update state with selected image
+};
 
   // Function to handle exam name
   const handleExamName = (e) => {
@@ -188,6 +198,7 @@ function QuestionSetter() {
     setLongQuestion({ ...longQuestion, subQuestion1: question });
     setSubQuestion1(null);
     setImage(null);   // Clear the selected image
+    setSelectedImage(null)
     setAddImage(false);
     setBloomLevel('-');
     setUnit('-');
@@ -258,6 +269,7 @@ function QuestionSetter() {
         setCo('');
         setQuestionText(null);
         setImage(null);   // Clear the selected image
+        setSelectedImage(null)
         setAddImage(false);
         return;
       }
@@ -453,11 +465,11 @@ function QuestionSetter() {
 
         {/* Container to set Question Text */}
         <h1 className='text-center font-extrabold text-3xl mt-10 p-auto text-black'>Set Questions Below </h1>
-          {/* Bloom Level Details */}
-          <p className="px-4 text-white bg-black py-2 border-4 font-extrabold border-[#9c36b5] rounded-2xl mb-0 text-center w-fit m-auto">
-            Bloom Levels:{" "}
-            {`1-Remenbering 2-Understanding 3-Applying 4-Analyzing 5-Evaluating 6-Creating`}
-          </p>
+        {/* Bloom Level Details */}
+        <p className="px-4 text-white bg-black py-2 border-4 font-extrabold border-[#9c36b5] rounded-2xl mb-0 text-center w-fit m-auto">
+          Bloom Levels:{" "}
+          {`1-Remenbering 2-Understanding 3-Applying 4-Analyzing 5-Evaluating 6-Creating`}
+        </p>
         <div className='flex ml-10 items-end mt-5 gap-10 font-extrabold'>
           {/* Container for other details */}
           <div className='flex flex-col gap-5 h-full'>
@@ -551,8 +563,17 @@ function QuestionSetter() {
                   </label>
                 </div>
 
+                  <div className="selected-image-container">
+                    {selectedImage && (
+                      <div className="selected-image-box">
+                        <img className='h-40 w-40' src={URL.createObjectURL(selectedImage)} alt="Selected" />
+                        <button className="remove-image-button" onClick={handleRemoveImage}>
+                        &#10005;
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
-
                   <ReactQuill modules={{ toolbar: toolbarOptions }} className='bg-white text-black p-4' theme="snow" value={subQuestion1} onChange={setSubQuestion1} />
                 </div>
 
@@ -575,8 +596,17 @@ function QuestionSetter() {
                   </label>
                 </div>
 
+                  <div className="selected-image-container">
+                    {selectedImage && (
+                      <div className="selected-image-box">
+                        <img className='h-40 w-40' src={URL.createObjectURL(selectedImage)} alt="Selected" />
+                        <button className="remove-image-button" onClick={handleRemoveImage}>
+                        &#10005;
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
-
                   <ReactQuill modules={{ toolbar: toolbarOptions }} className='bg-white text-black p-4' theme="snow" value={subQuestion2} onChange={setSubQuestion2} />
                 </div>
 
@@ -604,8 +634,17 @@ function QuestionSetter() {
                 </label>
               </div>
 
+                <div className="selected-image-container">
+                  {selectedImage && (
+                    <div className="selected-image-box">
+                      <img className='h-40 w-40' src={URL.createObjectURL(selectedImage)} alt="Selected" />
+                      <button className="remove-image-button" onClick={handleRemoveImage}>
+                      &#10005;
+                      </button>
+                    </div>
+                  )}
+                </div>
               <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
-
                 <ReactQuill modules={{ toolbar: toolbarOptions }} className='bg-white text-black p-4' theme="snow" value={questionText} onChange={setQuestionText} />
               </div>
 
