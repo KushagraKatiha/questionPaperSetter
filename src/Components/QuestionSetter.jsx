@@ -1,16 +1,15 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import '../App.css'
-import QuestionPaper from './QuestionPaper'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
+import { useNavigate } from 'react-router-dom';
 
 function QuestionSetter() {
   // Variables
   const [image, setImage] = useState(null);
   const [addImage, setAddImage] = useState(false);
-  const [model, setModel] = useState(null)
+  const [questionText, setQuestionText] = useState(null)
   const [examName, setExamName] = useState('')
   const [selectedPrograms, setSelectedPrograms] = useState([])
   const [semester, setSemester] = useState('')
@@ -18,25 +17,68 @@ function QuestionSetter() {
   const [courseCode, setCourseCode] = useState('')
   const [courseName, setCourseName] = useState('')
   const [otherProgram, setOtherProgram] = useState('')
+  // set Questions
   const [shortQuestions, setShortQuestions] = useState([])
   const [longQuestions, setLongQuestions] = useState([])
+  // long question will have subtype, if subtype is 1 then do nothing, if subtype is 2 two question of 5 makrs each
+  const [longQuestionSubType, setLongQuestionSubType] = useState(1)
+  const [subQuestion1, setSubQuestion1] = useState(null)
+  const [subQuestion2, setSubQuestion2] = useState(null)
+
+  // long question with sub question
+  const [longQuestion, setLongQuestion] = useState({})
   const [questionType, setQuestionType] = useState('choose');
   const [unit, setUnit] = useState('-');
   const [bloomLevel, setBloomLevel] = useState('-');
   const [co, setCo] = useState('-');
-  const [view, setView] = useState('hidden')
   const bottomRef = useRef(null); // Reference to the bottom element
+
+  // Navigate to the next page
+  const navigate = useNavigate();
+  
+  const handlePreview = () => {
+    if (shortQuestions.length === 8 && longQuestions.length === 4) {
+      // Navigate to the next page
+      navigate('/format')
+    } else {
+      alert('You have to add 8 short and 4 long questions')
+    }
+  }
+
+  // Save long question array into local storage
+  useEffect(() => {
+    localStorage.setItem('longQuestions', JSON.stringify(longQuestions));
+  }, [longQuestions]);
+
+  // Save short question array into local storage
+  useEffect(() => {
+    localStorage.setItem('shortQuestions', JSON.stringify(shortQuestions));
+  }, [shortQuestions]);
+
+  // Print long questions and short questions from local storage when the component mounts
+
+    // Save Exams Details into the local storage
+  useEffect(() => {
+    localStorage.setItem('examName', JSON.stringify(examName));
+    localStorage.setItem('selectedPrograms', JSON.stringify(selectedPrograms));
+    localStorage.setItem('semester', JSON.stringify(semester));
+    localStorage.setItem('year', JSON.stringify(year));
+    localStorage.setItem('courseCode', JSON.stringify(courseCode));
+    localStorage.setItem('courseName', JSON.stringify(courseName));
+    localStorage.setItem('otherProgram', JSON.stringify(otherProgram));
+  }, [examName, selectedPrograms, semester, year, courseCode, courseName, otherProgram]);
+
 
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
     ['blockquote', 'code-block'],
-  
+
     [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-  
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+
     [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-  
+
     [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
     [{ 'font': [] }],
     [{ 'align': [] }]
@@ -107,6 +149,10 @@ function QuestionSetter() {
     setQuestionType(e.target.value)
   }
 
+  const handleLongQuestionSubType = (e) => {
+    setLongQuestionSubType(e.target.value)
+  }
+
   const handleBloomLevel = (e) => {
     setBloomLevel(e.target.value)
   }
@@ -117,6 +163,63 @@ function QuestionSetter() {
 
   const handleCo = (e) => {
     setCo(e.target.value)
+  }
+
+  const handleAddSubQuestion1 = () => {
+    if (subQuestion1 == null || subQuestion1 === '<p><br></p>') {
+      alert('Please enter the question');
+      return; // Exit the function early
+    }
+
+    // Check if bloomLevel, unit, and co are not selected
+    if (unit === '-' || bloomLevel === '-' || co === '-') {
+      alert('Please select Unit, Bloom\'s Level, and Course Outcome.');
+      return; // Exit the function early
+    }
+
+    const question = {
+      ques: subQuestion1, // Set the ques property to the content from the Froala Editor
+      maxMarks: 5,
+      unit: unit,
+      bloomLevel: bloomLevel,
+      co: co,
+      image: image ? URL.createObjectURL(image) : null,
+    };
+    setLongQuestion({ ...longQuestion, subQuestion1: question });
+    setSubQuestion1(null);
+    setImage(null);   // Clear the selected image
+    setAddImage(false);
+    setBloomLevel('-');
+    setUnit('-');
+    setCo('-');
+    alert('Sub Question 1 added')
+  }
+
+  const handleAddSubQuestion2 = () => {
+    if (subQuestion2 == null || subQuestion2 === '<p><br></p>') {
+      alert('Please enter the question');
+      return; // Exit the function early
+    }
+
+    // Check if bloomLevel, unit, and co are not selected
+    if (unit === '-' || bloomLevel === '-' || co === '-') {
+      alert('Please select Unit, Bloom\'s Level, and Course Outcome.');
+      return; // Exit the function early
+    }
+
+    const question = {
+      ques: subQuestion2, // Set the ques property to the content from the Froala Editor
+      maxMarks: 5,
+      unit: unit,
+      bloomLevel: bloomLevel,
+      co: co,
+      image: image ? URL.createObjectURL(image) : null,
+    };
+    setLongQuestion({ ...longQuestion, subQuestion2: question });
+    setSubQuestion2(null);
+    setImage(null);   // Clear the selected image
+    setAddImage(false);
+    alert('Sub Question 2 added')
   }
 
   const handleAddQuestion = () => {
@@ -132,19 +235,41 @@ function QuestionSetter() {
       return; // Exit the function early
     }
 
-    // Check if the question is not empty
-    if (model == null || model === '<p><br></p>') {
-      alert('Please enter the question');
-      return; // Exit the function early
-    }
-
     if (
       (questionType === 'short' && shortQuestions.length < 8) ||
       (questionType === 'long' && longQuestions.length < 4)
     ) {
       const marks = questionType === 'long' ? 10 : 2;
+      // check if long question has sub question
+      if (longQuestionSubType === '2') {
+        if (Object.keys(longQuestion).length === 0) {
+          alert('Please enter both sub questions');
+          return; // Exit the function early
+        }
+        setLongQuestions((prevLongQuestions) => [...prevLongQuestions, longQuestion]);
+        alert(`${longQuestions.length + 1} Long question added`);
+        setLongQuestion({});
+        setLongQuestionSubType(1);
+        setSubQuestion1(null);
+        setSubQuestion2(null);
+        setQuestionType('choose');
+        setUnit('');
+        setBloomLevel('');
+        setCo('');
+        setQuestionText(null);
+        setImage(null);   // Clear the selected image
+        setAddImage(false);
+        return;
+      }
+
+      // Check if the question is not empty
+      if (questionText == null || questionText === '<p><br></p>') {
+        alert('Please enter the question');
+        return; // Exit the function early
+      }
+
       const question = {
-        ques: model, // Set the ques property to the content from the Froala Editor
+        ques: questionText, // Set the ques property to the content from the Froala Editor
         maxMarks: marks,
         unit: unit,
         bloomLevel: bloomLevel,
@@ -158,28 +283,17 @@ function QuestionSetter() {
         setShortQuestions([...shortQuestions, question]);
         alert(`${shortQuestions.length + 1} Short question added`);
       }
-
       setQuestionType('choose');
       setUnit('');
       setBloomLevel('');
       setCo('');
-      setModel(null);   
+      setQuestionText(null);
       setImage(null);   // Clear the selected image
       setAddImage(false);
     } else {
       alert('You can only add 8 short and 4 long questions');
     }
   };
-
-
-  const handleDone = () => {
-    if (shortQuestions.length === 8 && longQuestions.length === 4) {
-      document.getElementById('main_page').style.display = "none";
-      setView('visible')
-    } else {
-      alert('You have to add 8 short and 4 long questions')
-    }
-  }
 
   const scrollToBottom = () => {
     if (bottomRef.current) {
@@ -270,7 +384,7 @@ function QuestionSetter() {
                     <option value="M.Sc.-DS">M.Sc.- Data Science (From Session 2023-24 Onwards)</option>
                   </select>
                 </div>
-              
+
                 <div>
                   <input className='border-2 border-[#9c36b5] h-10 focus:outline-none px-2 bg-black text-white rounded-lg'
                     type="text"
@@ -279,7 +393,7 @@ function QuestionSetter() {
                     onChange={handleOtherProgram}
                   />
                 </div>
-                
+
               </div>
             </div>
 
@@ -326,7 +440,7 @@ function QuestionSetter() {
             </div>
 
             {/* container for image */}
-            <div className='w-1/3 shadow-black shadow-2xl '>
+            <div className='w-1/3 shadow-black shadow-2xl'>
               <img src="https://iili.io/JXX6IkJ.md.jpg" alt="clock_tower" className='rounded-lg' />
             </div>
           </div>
@@ -339,6 +453,11 @@ function QuestionSetter() {
 
         {/* Container to set Question Text */}
         <h1 className='text-center font-extrabold text-3xl mt-10 p-auto text-black'>Set Questions Below </h1>
+          {/* Bloom Level Details */}
+          <p className="px-4 text-white bg-black py-2 border-4 font-extrabold border-[#9c36b5] rounded-2xl mb-0 text-center w-fit m-auto">
+            Bloom Levels:{" "}
+            {`1-Remenbering 2-Understanding 3-Applying 4-Analyzing 5-Evaluating 6-Creating`}
+          </p>
         <div className='flex ml-10 items-end mt-5 gap-10 font-extrabold'>
           {/* Container for other details */}
           <div className='flex flex-col gap-5 h-full'>
@@ -352,6 +471,18 @@ function QuestionSetter() {
                 <option value="short">Short</option>
               </select>
             </div>
+
+            {/* Container to set question subtype */}
+            {questionType === 'long' && (
+              <div className='bg-black p-2 rounded-lg border-2 border-[#9c36b5]'>
+                <h2 className='font-bold text-white text-base'>Two Parts Needed ?</h2>
+                {/* Dropdown to set question type */}
+                <select className='focus:outline-none h-8 text-white px-1 py-1 bg-black border-[#9c36b5] border-2 rounded-lg' value={longQuestionSubType} onChange={handleLongQuestionSubType}>
+                  <option value="1">No</option>
+                  <option value="2">Yes</option>
+                </select>
+              </div>
+            )}
 
             {/* Container to set sub details */}
             <div className='bg-black border-2 border-[#9c36b5] p-4 rounded-lg'>
@@ -401,31 +532,92 @@ function QuestionSetter() {
             </div>
           </div>
 
-          <div className='text-center w-4/5 flex flex-col gap-1'>
+          {/* Container to set question */}
+          {/* If long questions sub type is two add two questions of 5 marks each*/}
 
-            <div className='flex gap-5 justify-between items-center w-full'>
-              <button className='bg-black mb-2 border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddImage}>
-                Add Image
-              </button>
-              {/* Create a custom button to trigger file input */}
-              <label className={addImage ? "visible custom-file-upload" : "hidden custom-file-upload"} >
-                Choose File
-                <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
-              </label>
-            </div>
+          {questionType === 'long' && longQuestionSubType === '2' ? (
+            <div className='flex flex-col justify-center items-center w-full'>
+              {/* Long Sub Question 1 container */}
+              <div className='text-center w-11/12 flex flex-col gap-1'>
 
-            <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
-              
-              <ReactQuill modules={{toolbar: toolbarOptions}} className='bg-white text-black p-4' theme="snow" value={model} onChange={setModel} />
-            </div>
-            
-            {/* Container to put add and done buttons */}
-            <div className='flex'>
-              <button className='bg-black border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddQuestion}>Add</button>
+                <div className='flex gap-5 justify-between items-center w-full'>
+                  <button className='bg-black mb-2 border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddImage}>
+                    Add Image
+                  </button>
+                  {/* Create a custom button to trigger file input */}
+                  <label className={addImage ? "visible custom-file-upload" : "hidden custom-file-upload"} >
+                    Choose File
+                    <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+                  </label>
+                </div>
 
-              <button className='bg-black border-2 border-[#ff0000] text-[#523bff] px-4 py-2 rounded-lg mt-4 ml-4' onClick={handleDone}>Done</button>
+                <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
+
+                  <ReactQuill modules={{ toolbar: toolbarOptions }} className='bg-white text-black p-4' theme="snow" value={subQuestion1} onChange={setSubQuestion1} />
+                </div>
+
+                {/* Container to put add button*/}
+                <div className='flex'>
+                  <button className='bg-black border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddSubQuestion1}>Add sub question 1</button>
+                </div>
+              </div>
+
+              {/* Long Sub Question 2 container */}
+              <div className='text-center w-11/12 flex flex-col gap-1'>
+                <div className='flex gap-5 justify-between items-center w-full'>
+                  <button className='bg-black mb-2 border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddImage}>
+                    Add Image
+                  </button>
+                  {/* Create a custom button to trigger file input */}
+                  <label className={addImage ? "visible custom-file-upload" : "hidden custom-file-upload"} >
+                    Choose File
+                    <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+                  </label>
+                </div>
+
+                <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
+
+                  <ReactQuill modules={{ toolbar: toolbarOptions }} className='bg-white text-black p-4' theme="snow" value={subQuestion2} onChange={setSubQuestion2} />
+                </div>
+
+                {/* Container to put add button*/}
+                <div className='flex'>
+                  <button className='bg-black border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddSubQuestion2}>Add sub question 2</button>
+                </div>
+              </div>
+
+              <div className='flex'>
+                <button className='bg-black border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddQuestion}>Add Question</button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className='text-center w-4/5 flex flex-col gap-1'>
+
+              <div className='flex gap-5 justify-between items-center w-full'>
+                <button className='bg-black mb-2 border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddImage}>
+                  Add Image
+                </button>
+                {/* Create a custom button to trigger file input */}
+                <label className={addImage ? "visible custom-file-upload" : "hidden custom-file-upload"} >
+                  Choose File
+                  <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+                </label>
+              </div>
+
+              <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
+
+                <ReactQuill modules={{ toolbar: toolbarOptions }} className='bg-white text-black p-4' theme="snow" value={questionText} onChange={setQuestionText} />
+              </div>
+
+              {/* Container to put add and done buttons */}
+              <div className='flex'>
+                <button className='bg-black border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddQuestion}>Add</button>
+
+                <button className='bg-black border-2 border-[#ff0000] text-[#523bff] px-4 py-2 rounded-lg mt-4 ml-4' onClick={handlePreview}>Preview</button>
+              </div>
+            </div>
+          )}
+
         </div>
         <hr className='border-2 border-black mt-5' />
         {/* Container for Credentials */}
@@ -448,12 +640,8 @@ function QuestionSetter() {
               <p className='font-light text-xs'>B.Tech CSE (2021-2025)</p>
             </div>
           </div>
-
         </div>
       </div>
-
-      <QuestionPaper examName={examName} selectedPrograms={selectedPrograms} otherProgram={otherProgram} semester={semester} year={year} courseCode={courseCode} courseName={courseName} shortQuestions={shortQuestions} longQuestions={longQuestions} view={view} />
-
     </>
   )
 }

@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom"
 
-function QuestionPaper({
-  examName,
-  selectedPrograms,
-  semester,
-  year,
-  courseCode,
-  courseName,
-  shortQuestions,
-  longQuestions,
-  otherProgram,
-  view
-}) {
+function QuestionPaper({}) {
+
+  // Fetch the data from the local storage
+  const examName = localStorage.getItem("examName").replace(/^"(.*)"$/, '$1');
+  const selectedPrograms = JSON.parse(localStorage.getItem("selectedPrograms"));
+  const otherProgram = localStorage.getItem("otherProgram").replace(/^"(.*)"$/, '$1');
+  const year = localStorage.getItem("year").replace(/^"(.*)"$/, '$1');
+  const semester = localStorage.getItem("semester").replace(/^"(.*)"$/, '$1');
+  const courseCode = localStorage.getItem("courseCode").replace(/^"(.*)"$/, '$1');
+  const courseName = localStorage.getItem("courseName").replace(/^"(.*)"$/, '$1');
+  const shortQuestions = JSON.parse(localStorage.getItem("shortQuestions"));
+  const longQuestions = JSON.parse(localStorage.getItem("longQuestions"));
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // Check if the user accessed the page directly by manipulating the URL
+    const isDirectAccess = window.history.state.idx === 0;
+    if (isDirectAccess) {
+      // Redirect the user to the home page
+      alert("Cannot access the page directly. Redirecting to the home page...")
+      navigate('/');
+    }
+  }, [navigate]);
 
   let academicSession;
   const currentDate = new Date();
@@ -24,9 +37,13 @@ function QuestionPaper({
   }
 
   const handleDone = () => {
-    window.location.reload();
+    navigate('/')
   }
-  
+
+  const handleEdit = () => {
+    navigate('/edit-page')
+  }
+
   const handlePrint = () => {
     const printContent = document.getElementById("printContent").innerHTML;
     const originalContent = document.body.innerHTML;
@@ -49,9 +66,9 @@ function QuestionPaper({
 
   return (
     <>
-      <div style={{ backgroundImage: 'linear-gradient(to right, #f4e7ff, #a77ed6)'}}
+      <div style={{ backgroundImage: 'linear-gradient(to right, #f4e7ff, #a77ed6)' }}
         id="questionPaper"
-        className={`text-black mt-20 w-full h-full flex flex-col items-center justify-center mb-8 ${view}`}
+        className={`text-black mt-20 w-full h-full flex flex-col items-center justify-center mb-8 `}
       >
         <div className="px-12 bg-white h-5/6 w-1/2">
           {/* College Banner Container */}
@@ -72,7 +89,7 @@ function QuestionPaper({
             >
               {examName.toUpperCase()}
             </h2>
-            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}{otherProgram?"/": " "}{otherProgram.toUpperCase()}</h2>
+            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}{otherProgram ? "/" : " "}{otherProgram.toUpperCase()}</h2>
           </div>
 
           {/* Exam Details Table */}
@@ -133,21 +150,21 @@ function QuestionPaper({
             <h2 className="font-medium text-sm underline mb-1 mt-2 ml-4">Attemp any five question only.</h2>
             {shortQuestions.map((question, index) => {
               return (
-                <div key={index} className="ml-4 flex justify-between gap-3 items-center mb-3">
+                <div key={index} className="ml-4 flex justify-between gap-5 items-center mb-3">
                   <div className="flex flex-col">
-                  <div className="flex gap-1">
-                    <span className="font-medium text-xs">
-                      {String.fromCharCode(65 + index)}.
-                    </span>
-                    <div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
-                  </div>
-                  {question.image && (
-                    <div className="ml-4 w-1/2">
-                      <img src={question.image} className="h-[150px]" alt="Question Image" />
+                    <div className="flex gap-1">
+                      <span className="font-medium text-xs">
+                        {String.fromCharCode(65 + index)}.
+                      </span>
+                      <div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
                     </div>
-                  )}
+                    {question.image && (
+                      <div className="ml-4 w-1/2">
+                        <img src={question.image} className="h-[150px]" alt="Question Image" />
+                      </div>
+                    )}
                   </div>
-                  <div className="flex gap-8 text-xs">
+                  <div className="flex gap-7 mr-3 text-xs">
                     <p>({question.maxMarks})</p>
                     <p>{question.unit}</p>
                     <p>{question.bloomLevel}</p>
@@ -164,108 +181,288 @@ function QuestionPaper({
               <div className="mt-6 ml-6 text-sm font-bold">
                 <h2>LONG QUESTIONS</h2>
               </div>
-
               {/* Questions */}
+              {/* Question 1 */}
               <div>
                 <div className="flex mt-1">
                   <span className="font-bold text-sm">2.</span>
-                  <div className="w-full flex gap-3 justify-between">
-                  <div className="flex flex-col">
-                    <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
-                    </div>
-                    {longQuestions[0].image && (
-                      <div className="ml-6 w-1/2">
-                        <img src={longQuestions[0].image} alt="Question Image" />
-                      </div>
-                    )}
+                  {/* If long question have a object have two more objects inside it */}
+                  {longQuestions[0].subQuestion1 && longQuestions[0].subQuestion2 ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-2 font-medium text-sm mr-1">A. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].subQuestion1.ques }}></div>
+                          </div>
+                          {longQuestions[0].subQuestion1.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[0].subQuestion1.image} alt="Question Image" />
+                            </div>
+                          )}
 
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[0].subQuestion1.maxMarks})</p>
+                          <p>{longQuestions[0].subQuestion1.unit}</p>
+                          <p>{longQuestions[0].subQuestion1.bloomLevel}</p>
+                          <p>{longQuestions[0].subQuestion1.co}</p>
+                        </div>
+                      </div>
+
+                      {/* Subquestion 2 */}
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-8 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].subQuestion2.ques }}></div>
+                          </div>
+                          {longQuestions[0].subQuestion2.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[0].subQuestion2.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[0].subQuestion2.maxMarks})</p>
+                          <p>{longQuestions[0].subQuestion2.unit}</p>
+                          <p>{longQuestions[0].subQuestion2.bloomLevel}</p>
+                          <p>{longQuestions[0].subQuestion2.co}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex gap-8 text-xs">
-                      <p>({longQuestions[0].maxMarks})</p>
-                      <p>{longQuestions[0].unit}</p>
-                      <p>{longQuestions[0].bloomLevel}</p>
-                      <p>{longQuestions[0].co}</p>
+                  ) : (
+                    <div className="w-full flex gap-3 justify-between">
+                      <div className="flex flex-col">
+                        <div className="flex text-xs ">
+                          <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
+                        </div>
+                        {longQuestions[0].image && (
+                          <div className="ml-6 w-1/2">
+                            <img src={longQuestions[0].image} alt="Question Image" />
+                          </div>
+                        )}
+
+                      </div>
+                      <div className="flex gap-7 mr-3 text-xs">
+                        <p>({longQuestions[0].maxMarks})</p>
+                        <p>{longQuestions[0].unit}</p>
+                        <p>{longQuestions[0].bloomLevel}</p>
+                        <p>{longQuestions[0].co}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
               <h1 className="text-center font-semibold text-base">OR</h1>
-              <div>
-                <div className="flex ml-3">
-                  <div className="w-full flex gap-3 justify-between">
-                    <div className="flex flex-col">
-                    <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
-                    </div>
+              {/* Question 2 */}
+              <div className="flex mt-1">
+                  {/* If long question have a object have two more objects inside it */}
+                  {longQuestions[1].subQuestion1 && longQuestions[1].subQuestion2 ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-5 font-medium text-sm mr-1">B. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].subQuestion1.ques }}></div>
+                          </div>
+                          {longQuestions[1].subQuestion1.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[1].subQuestion1.image} alt="Question Image" />
+                            </div>
+                          )}
 
-                    {longQuestions[1].image && (
-                      <div className="ml-6 w-1/2">
-                        <img src={longQuestions[1].image} alt="Question Image" />
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[1].subQuestion1.maxMarks})</p>
+                          <p>{longQuestions[1].subQuestion1.unit}</p>
+                          <p>{longQuestions[1].subQuestion1.bloomLevel}</p>
+                          <p>{longQuestions[1].subQuestion1.co}</p>
+                        </div>
                       </div>
-                    )}
-                    </div>
-                    <div className="flex gap-8 text-xs">
-                      <p>({longQuestions[1].maxMarks})</p>
-                      <p>{longQuestions[1].unit}</p>
-                      <p>{longQuestions[1].bloomLevel}</p>
-                      <p>{longQuestions[1].co}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div>
-                <div className="flex mt-5">
+                      {/* Subquestion 2 */}
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-11 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].subQuestion2.ques }}></div>
+                          </div>
+                          {longQuestions[1].subQuestion2.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[1].subQuestion2.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[1].subQuestion2.maxMarks})</p>
+                          <p>{longQuestions[1].subQuestion2.unit}</p>
+                          <p>{longQuestions[1].subQuestion2.bloomLevel}</p>
+                          <p>{longQuestions[1].subQuestion2.co}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-full flex gap-3 justify-between">
+                      <div className="flex flex-col">
+                        <div className="flex text-xs ">
+                          <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
+                        </div>
+                        {longQuestions[1].image && (
+                          <div className="ml-6 w-1/2">
+                            <img src={longQuestions[1].image} alt="Question Image" />
+                          </div>
+                        )}
+
+                      </div>
+                      <div className="flex gap-7 mr-3 text-xs">
+                        <p>({longQuestions[1].maxMarks})</p>
+                        <p>{longQuestions[1].unit}</p>
+                        <p>{longQuestions[1].bloomLevel}</p>
+                        <p>{longQuestions[1].co}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              {/* Question 3 */}
+              <div className="flex mt-5">
                   <span className="font-bold text-sm">3.</span>
-                  <div className="w-full flex gap-3 justify-between">
-                  <div className="flex flex-col">
-                    <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
-                    </div>
+                  {/* If long question have a object have two more objects inside it */}
+                  {longQuestions[2].subQuestion1 && longQuestions[2].subQuestion2 ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-2 font-medium text-sm mr-1">A. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].subQuestion1.ques }}></div>
+                          </div>
+                          {longQuestions[2].subQuestion1.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[2].subQuestion1.image} alt="Question Image" />
+                            </div>
+                          )}
 
-                    {longQuestions[2].image && (
-                      <div className="ml-6 w-1/2">
-                        <img src={longQuestions[2].image} alt="Question Image" />
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[2].subQuestion1.maxMarks})</p>
+                          <p>{longQuestions[2].subQuestion1.unit}</p>
+                          <p>{longQuestions[2].subQuestion1.bloomLevel}</p>
+                          <p>{longQuestions[2].subQuestion1.co}</p>
+                        </div>
                       </div>
-                    )}
+
+                      {/* Subquestion 2 */}
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-8 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].subQuestion2.ques }}></div>
+                          </div>
+                          {longQuestions[2].subQuestion2.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[2].subQuestion2.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[2].subQuestion2.maxMarks})</p>
+                          <p>{longQuestions[2].subQuestion2.unit}</p>
+                          <p>{longQuestions[2].subQuestion2.bloomLevel}</p>
+                          <p>{longQuestions[2].subQuestion2.co}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex gap-8 text-xs">
-                      <p>({longQuestions[2].maxMarks})</p>
-                      <p>{longQuestions[2].unit}</p>
-                      <p>{longQuestions[2].bloomLevel}</p>
-                      <p>{longQuestions[2].co}</p>
+                  ) : (
+                    <div className="w-full flex gap-3 justify-between">
+                      <div className="flex flex-col">
+                        <div className="flex text-xs ">
+                          <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
+                        </div>
+                        {longQuestions[2].image && (
+                          <div className="ml-6 w-1/2">
+                            <img src={longQuestions[2].image} alt="Question Image" />
+                          </div>
+                        )}
+
+                      </div>
+                      <div className="flex gap-7 mr-3 text-xs">
+                        <p>({longQuestions[2].maxMarks})</p>
+                        <p>{longQuestions[2].unit}</p>
+                        <p>{longQuestions[2].bloomLevel}</p>
+                        <p>{longQuestions[2].co}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              </div>
               <h1 className="text-center font-semibold text-base">OR</h1>
-              <div>
-                <div className="flex ml-3">
-                  <div className="w-full flex gap-3 justify-between">
-                  <div className="flex flex-col">
-                    <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
-                    </div>
 
-                    {longQuestions[3].image && (
-                      <div className="ml-6 w-1/2">
-                        <img src={longQuestions[3].image} alt="Question Image" />
+              {/* Question 4 */}
+              <div className="flex mt-1">
+                  {/* If long question have a object have two more objects inside it */}
+                  {longQuestions[3].subQuestion1 && longQuestions[3].subQuestion2 ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-5 font-medium text-sm mr-1">B. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].subQuestion1.ques }}></div>
+                          </div>
+                          {longQuestions[3].subQuestion1.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[3].subQuestion1.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[3].subQuestion1.maxMarks})</p>
+                          <p>{longQuestions[3].subQuestion1.unit}</p>
+                          <p>{longQuestions[3].subQuestion1.bloomLevel}</p>
+                          <p>{longQuestions[3].subQuestion1.co}</p>
+                        </div>
                       </div>
-                    )}
+
+                      {/* Subquestion 2 */}
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-11 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].subQuestion2.ques }}></div>
+                          </div>
+                          {longQuestions[3].subQuestion2.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[3].subQuestion2.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[3].subQuestion2.maxMarks})</p>
+                          <p>{longQuestions[3].subQuestion2.unit}</p>
+                          <p>{longQuestions[3].subQuestion2.bloomLevel}</p>
+                          <p>{longQuestions[3].subQuestion2.co}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex gap-8 text-xs">
-                      <p>({longQuestions[3].maxMarks})</p>
-                      <p>{longQuestions[3].unit}</p>
-                      <p>{longQuestions[3].bloomLevel}</p>
-                      <p>{longQuestions[3].co}</p>
+                  ) : (
+                    <div className="w-full flex gap-3 justify-between">
+                      <div className="flex flex-col">
+                        <div className="flex text-xs ">
+                          <span className="ml-5 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                        </div>
+                        {longQuestions[3].image && (
+                          <div className="ml-6 w-1/2">
+                            <img src={longQuestions[3].image} alt="Question Image" />
+                          </div>
+                        )}
+
+                      </div>
+                      <div className="flex gap-7 mr-3 text-xs">
+                        <p>({longQuestions[3].maxMarks})</p>
+                        <p>{longQuestions[3].unit}</p>
+                        <p>{longQuestions[3].bloomLevel}</p>
+                        <p>{longQuestions[3].co}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              </div>
             </>
           )}
-
 
           {/* Print Button */}
           <div className="flex justify-around mt-8 mb-5">
@@ -283,13 +480,21 @@ function QuestionPaper({
             >
               Done
             </button>
+
+             {/* Edit Button */}
+             <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 ml-4"
+              onClick={handleEdit}
+            >
+              Edit
+            </button>
           </div>
         </div>
       </div>
 
       <div id="printContent" className="hidden">
         {/* Add your content here that you want to print */}
-        <div className="px-12 py-8 bg-white h-full w-full">
+        <div className="px-12 bg-white h-5/6 w-1/2">
           {/* College Banner Container */}
           {/* College Banner */}
           <div className="bg-black mt-5">
@@ -308,7 +513,7 @@ function QuestionPaper({
             >
               {examName.toUpperCase()}
             </h2>
-            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}/{otherProgram.toUpperCase()}</h2>
+            <h2 className="text-xs">Program Name: {selectedPrograms.toString().split(',').join('/')}{otherProgram ? "/" : " "}{otherProgram.toUpperCase()}</h2>
           </div>
 
           {/* Exam Details Table */}
@@ -369,21 +574,21 @@ function QuestionPaper({
             <h2 className="font-medium text-sm underline mb-1 mt-2 ml-4">Attemp any five question only.</h2>
             {shortQuestions.map((question, index) => {
               return (
-                <div key={index} className="ml-4 flex justify-between gap-3 items-center mb-3">
+                <div key={index} className="ml-4 flex justify-between gap-5 items-center mb-3">
                   <div className="flex flex-col">
-                  <div className="flex gap-1">
-                    <span className="font-medium text-xs">
-                      {String.fromCharCode(65 + index)}.
-                    </span>
-                    <div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
-                  </div>
-                  {question.image && (
-                    <div className="ml-4 w-1/2">
-                      <img src={question.image} className="h-[150px]" alt="Question Image" />
+                    <div className="flex gap-1">
+                      <span className="font-medium text-xs">
+                        {String.fromCharCode(65 + index)}.
+                      </span>
+                      <div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: question.ques }}></div>
                     </div>
-                  )}
+                    {question.image && (
+                      <div className="ml-4 w-1/2">
+                        <img src={question.image} className="h-[150px]" alt="Question Image" />
+                      </div>
+                    )}
                   </div>
-                  <div className="flex gap-8 text-xs">
+                  <div className="flex gap-7 mr-3 text-xs">
                     <p>({question.maxMarks})</p>
                     <p>{question.unit}</p>
                     <p>{question.bloomLevel}</p>
@@ -400,107 +605,288 @@ function QuestionPaper({
               <div className="mt-6 ml-6 text-sm font-bold">
                 <h2>LONG QUESTIONS</h2>
               </div>
-
               {/* Questions */}
+              {/* Question 1 */}
               <div>
                 <div className="flex mt-1">
                   <span className="font-bold text-sm">2.</span>
-                  <div className="w-full flex gap-3 justify-between">
-                  <div className="flex flex-col">
-                    <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
-                    </div>
-                    {longQuestions[0].image && (
-                      <div className="ml-6 w-1/2">
-                        <img src={longQuestions[0].image} alt="Question Image" />
-                      </div>
-                    )}
+                  {/* If long question have a object have two more objects inside it */}
+                  {longQuestions[0].subQuestion1 && longQuestions[0].subQuestion2 ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-2 font-medium text-sm mr-1">A. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].subQuestion1.ques }}></div>
+                          </div>
+                          {longQuestions[0].subQuestion1.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[0].subQuestion1.image} alt="Question Image" />
+                            </div>
+                          )}
 
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[0].subQuestion1.maxMarks})</p>
+                          <p>{longQuestions[0].subQuestion1.unit}</p>
+                          <p>{longQuestions[0].subQuestion1.bloomLevel}</p>
+                          <p>{longQuestions[0].subQuestion1.co}</p>
+                        </div>
+                      </div>
+
+                      {/* Subquestion 2 */}
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-8 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].subQuestion2.ques }}></div>
+                          </div>
+                          {longQuestions[0].subQuestion2.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[0].subQuestion2.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[0].subQuestion2.maxMarks})</p>
+                          <p>{longQuestions[0].subQuestion2.unit}</p>
+                          <p>{longQuestions[0].subQuestion2.bloomLevel}</p>
+                          <p>{longQuestions[0].subQuestion2.co}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex gap-8 text-xs">
-                      <p>({longQuestions[0].maxMarks})</p>
-                      <p>{longQuestions[0].unit}</p>
-                      <p>{longQuestions[0].bloomLevel}</p>
-                      <p>{longQuestions[0].co}</p>
+                  ) : (
+                    <div className="w-full flex gap-3 justify-between">
+                      <div className="flex flex-col">
+                        <div className="flex text-xs ">
+                          <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].ques }}></div>
+                        </div>
+                        {longQuestions[0].image && (
+                          <div className="ml-6 w-1/2">
+                            <img src={longQuestions[0].image} alt="Question Image" />
+                          </div>
+                        )}
+
+                      </div>
+                      <div className="flex gap-7 mr-3 text-xs">
+                        <p>({longQuestions[0].maxMarks})</p>
+                        <p>{longQuestions[0].unit}</p>
+                        <p>{longQuestions[0].bloomLevel}</p>
+                        <p>{longQuestions[0].co}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
               <h1 className="text-center font-semibold text-base">OR</h1>
-              <div>
-                <div className="flex ml-3">
-                  <div className="w-full flex gap-3 justify-between">
-                    <div className="flex flex-col">
-                    <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
-                    </div>
+              {/* Question 2 */}
+              <div className="flex mt-1">
+                  {/* If long question have a object have two more objects inside it */}
+                  {longQuestions[1].subQuestion1 && longQuestions[1].subQuestion2 ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-5 font-medium text-sm mr-1">B. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].subQuestion1.ques }}></div>
+                          </div>
+                          {longQuestions[1].subQuestion1.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[1].subQuestion1.image} alt="Question Image" />
+                            </div>
+                          )}
 
-                    {longQuestions[1].image && (
-                      <div className="ml-6 w-1/2">
-                        <img src={longQuestions[1].image} alt="Question Image" />
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[1].subQuestion1.maxMarks})</p>
+                          <p>{longQuestions[1].subQuestion1.unit}</p>
+                          <p>{longQuestions[1].subQuestion1.bloomLevel}</p>
+                          <p>{longQuestions[1].subQuestion1.co}</p>
+                        </div>
                       </div>
-                    )}
-                    </div>
-                    <div className="flex gap-8 text-xs">
-                      <p>({longQuestions[1].maxMarks})</p>
-                      <p>{longQuestions[1].unit}</p>
-                      <p>{longQuestions[1].bloomLevel}</p>
-                      <p>{longQuestions[1].co}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div>
-                <div className="flex mt-5">
+                      {/* Subquestion 2 */}
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-11 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].subQuestion2.ques }}></div>
+                          </div>
+                          {longQuestions[1].subQuestion2.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[1].subQuestion2.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[1].subQuestion2.maxMarks})</p>
+                          <p>{longQuestions[1].subQuestion2.unit}</p>
+                          <p>{longQuestions[1].subQuestion2.bloomLevel}</p>
+                          <p>{longQuestions[1].subQuestion2.co}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-full flex gap-3 justify-between">
+                      <div className="flex flex-col">
+                        <div className="flex text-xs ">
+                          <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].ques }}></div>
+                        </div>
+                        {longQuestions[1].image && (
+                          <div className="ml-6 w-1/2">
+                            <img src={longQuestions[1].image} alt="Question Image" />
+                          </div>
+                        )}
+
+                      </div>
+                      <div className="flex gap-7 mr-3 text-xs">
+                        <p>({longQuestions[1].maxMarks})</p>
+                        <p>{longQuestions[1].unit}</p>
+                        <p>{longQuestions[1].bloomLevel}</p>
+                        <p>{longQuestions[1].co}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              {/* Question 3 */}
+              <div className="flex mt-5">
                   <span className="font-bold text-sm">3.</span>
-                  <div className="w-full flex gap-3 justify-between">
-                  <div className="flex flex-col">
-                    <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
-                    </div>
+                  {/* If long question have a object have two more objects inside it */}
+                  {longQuestions[2].subQuestion1 && longQuestions[2].subQuestion2 ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-2 font-medium text-sm mr-1">A. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].subQuestion1.ques }}></div>
+                          </div>
+                          {longQuestions[2].subQuestion1.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[2].subQuestion1.image} alt="Question Image" />
+                            </div>
+                          )}
 
-                    {longQuestions[2].image && (
-                      <div className="ml-6 w-1/2">
-                        <img src={longQuestions[2].image} alt="Question Image" />
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[2].subQuestion1.maxMarks})</p>
+                          <p>{longQuestions[2].subQuestion1.unit}</p>
+                          <p>{longQuestions[2].subQuestion1.bloomLevel}</p>
+                          <p>{longQuestions[2].subQuestion1.co}</p>
+                        </div>
                       </div>
-                    )}
+
+                      {/* Subquestion 2 */}
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-8 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].subQuestion2.ques }}></div>
+                          </div>
+                          {longQuestions[2].subQuestion2.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[2].subQuestion2.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[2].subQuestion2.maxMarks})</p>
+                          <p>{longQuestions[2].subQuestion2.unit}</p>
+                          <p>{longQuestions[2].subQuestion2.bloomLevel}</p>
+                          <p>{longQuestions[2].subQuestion2.co}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex gap-8 text-xs">
-                      <p>({longQuestions[2].maxMarks})</p>
-                      <p>{longQuestions[2].unit}</p>
-                      <p>{longQuestions[2].bloomLevel}</p>
-                      <p>{longQuestions[2].co}</p>
+                  ) : (
+                    <div className="w-full flex gap-3 justify-between">
+                      <div className="flex flex-col">
+                        <div className="flex text-xs ">
+                          <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].ques }}></div>
+                        </div>
+                        {longQuestions[2].image && (
+                          <div className="ml-6 w-1/2">
+                            <img src={longQuestions[2].image} alt="Question Image" />
+                          </div>
+                        )}
+
+                      </div>
+                      <div className="flex gap-7 mr-3 text-xs">
+                        <p>({longQuestions[2].maxMarks})</p>
+                        <p>{longQuestions[2].unit}</p>
+                        <p>{longQuestions[2].bloomLevel}</p>
+                        <p>{longQuestions[2].co}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              </div>
               <h1 className="text-center font-semibold text-base">OR</h1>
-              <div>
-                <div className="flex ml-3">
-                  <div className="w-full flex gap-3 justify-between">
-                  <div className="flex flex-col">
-                    <div className="flex text-xs ">
-                      <span className="ml-2 font-medium text-sm mr-1">B. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
-                    </div>
 
-                    {longQuestions[3].image && (
-                      <div className="ml-6 w-1/2">
-                        <img src={longQuestions[3].image} alt="Question Image" />
+              {/* Question 4 */}
+              <div className="flex mt-1">
+                  {/* If long question have a object have two more objects inside it */}
+                  {longQuestions[3].subQuestion1 && longQuestions[3].subQuestion2 ? (
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-5 font-medium text-sm mr-1">B. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].subQuestion1.ques }}></div>
+                          </div>
+                          {longQuestions[3].subQuestion1.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[3].subQuestion1.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[3].subQuestion1.maxMarks})</p>
+                          <p>{longQuestions[3].subQuestion1.unit}</p>
+                          <p>{longQuestions[3].subQuestion1.bloomLevel}</p>
+                          <p>{longQuestions[3].subQuestion1.co}</p>
+                        </div>
                       </div>
-                    )}
+
+                      {/* Subquestion 2 */}
+                      <div className="w-full flex gap-5 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex text-xs ">
+                            <span className="ml-11 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].subQuestion2.ques }}></div>
+                          </div>
+                          {longQuestions[3].subQuestion2.image && (
+                            <div className="ml-6 w-1/2">
+                              <img src={longQuestions[3].subQuestion2.image} alt="Question Image" />
+                            </div>
+                          )}
+
+                        </div>
+                        <div className="flex gap-7 mr-3 text-xs">
+                          <p>({longQuestions[3].subQuestion2.maxMarks})</p>
+                          <p>{longQuestions[3].subQuestion2.unit}</p>
+                          <p>{longQuestions[3].subQuestion2.bloomLevel}</p>
+                          <p>{longQuestions[3].subQuestion2.co}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex gap-8 text-xs">
-                      <p>({longQuestions[3].maxMarks})</p>
-                      <p>{longQuestions[3].unit}</p>
-                      <p>{longQuestions[3].bloomLevel}</p>
-                      <p>{longQuestions[3].co}</p>
+                  ) : (
+                    <div className="w-full flex gap-3 justify-between">
+                      <div className="flex flex-col">
+                        <div className="flex text-xs ">
+                          <span className="ml-2 font-medium text-sm mr-1">A. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].ques }}></div>
+                        </div>
+                        {longQuestions[3].image && (
+                          <div className="ml-6 w-1/2">
+                            <img src={longQuestions[3].image} alt="Question Image" />
+                          </div>
+                        )}
+
+                      </div>
+                      <div className="flex gap-7 mr-3 text-xs">
+                        <p>({longQuestions[3].maxMarks})</p>
+                        <p>{longQuestions[3].unit}</p>
+                        <p>{longQuestions[3].bloomLevel}</p>
+                        <p>{longQuestions[3].co}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              </div>
             </>
-          )}
+          )}  
         </div>
       </div>
     </>
