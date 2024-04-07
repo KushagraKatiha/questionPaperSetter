@@ -619,7 +619,7 @@ function QuestionPaper({}) {
                             <span className="ml-2 font-medium text-sm mr-1">A. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].subQuestion1.ques }}></div>
                           </div>
                           {longQuestions[0].subQuestion1.image && (
-                            <div className="ml-6 w-1/2">
+                            <div className="ml-16 w-1/2">
                               <img src={longQuestions[0].subQuestion1.image} alt="Question Image" />
                             </div>
                           )}
@@ -640,7 +640,7 @@ function QuestionPaper({}) {
                             <span className="ml-8 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[0].subQuestion2.ques }}></div>
                           </div>
                           {longQuestions[0].subQuestion2.image && (
-                            <div className="ml-6 w-1/2">
+                            <div className="ml-16 w-1/2">
                               <img src={longQuestions[0].subQuestion2.image} alt="Question Image" />
                             </div>
                           )}
@@ -689,7 +689,7 @@ function QuestionPaper({}) {
                             <span className="ml-5 font-medium text-sm mr-1">B. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].subQuestion1.ques }}></div>
                           </div>
                           {longQuestions[1].subQuestion1.image && (
-                            <div className="ml-6 w-1/2">
+                            <div className="ml-16 w-1/2">
                               <img src={longQuestions[1].subQuestion1.image} alt="Question Image" />
                             </div>
                           )}
@@ -710,7 +710,7 @@ function QuestionPaper({}) {
                             <span className="ml-11 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[1].subQuestion2.ques }}></div>
                           </div>
                           {longQuestions[1].subQuestion2.image && (
-                            <div className="ml-6 w-1/2">
+                            <div className="ml-16 w-1/2">
                               <img src={longQuestions[1].subQuestion2.image} alt="Question Image" />
                             </div>
                           )}
@@ -758,7 +758,7 @@ function QuestionPaper({}) {
                             <span className="ml-2 font-medium text-sm mr-1">A. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].subQuestion1.ques }}></div>
                           </div>
                           {longQuestions[2].subQuestion1.image && (
-                            <div className="ml-6 w-1/2">
+                            <div className="ml-16 w-1/2">
                               <img src={longQuestions[2].subQuestion1.image} alt="Question Image" />
                             </div>
                           )}
@@ -779,7 +779,7 @@ function QuestionPaper({}) {
                             <span className="ml-8 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[2].subQuestion2.ques }}></div>
                           </div>
                           {longQuestions[2].subQuestion2.image && (
-                            <div className="ml-6 w-1/2">
+                            <div className="ml-16 w-1/2">
                               <img src={longQuestions[2].subQuestion2.image} alt="Question Image" />
                             </div>
                           )}
@@ -828,7 +828,7 @@ function QuestionPaper({}) {
                             <span className="ml-5 font-medium text-sm mr-1">B. </span><span className="ml-2 font-medium text-sm mr-1">a.</span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].subQuestion1.ques }}></div>
                           </div>
                           {longQuestions[3].subQuestion1.image && (
-                            <div className="ml-6 w-1/2">
+                            <div className="ml-16 w-1/2">
                               <img src={longQuestions[3].subQuestion1.image} alt="Question Image" />
                             </div>
                           )}
@@ -849,7 +849,7 @@ function QuestionPaper({}) {
                             <span className="ml-11 font-medium text-sm mr-1">b. </span><div className="text-xs text-justify" dangerouslySetInnerHTML={{ __html: longQuestions[3].subQuestion2.ques }}></div>
                           </div>
                           {longQuestions[3].subQuestion2.image && (
-                            <div className="ml-6 w-1/2">
+                            <div className="ml-16 w-1/2">
                               <img src={longQuestions[3].subQuestion2.image} alt="Question Image" />
                             </div>
                           )}

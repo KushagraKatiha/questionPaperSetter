@@ -19,43 +19,40 @@ function EditQuestion() {
         }
     }, [navigate]);
 
-    const longQuestions = JSON.parse(localStorage.getItem('longQuestions')) || [];
-    const shortQuestions = JSON.parse(localStorage.getItem('shortQuestions')) || [];
-
     // Variables
     const [questionType, setQuestionType] = useState('choose');
     const [questionNumber, setQuestionNumber] = useState(1);
-    const [ques, setQues] = useState(null);
-    const [subQues1, setSubQues1] = useState(null);
-    const [subQues2, setSubQues2] = useState(null);
-    const [twoParts, setTwoParts] = useState(null);
+    // const [ques, setQues] = useState(null);
+    // const [subQues1, setSubQues1] = useState(null);
+    // const [subQues2, setSubQues2] = useState(null);
+    // const [twoParts, setTwoParts] = useState(null);
 
-    useEffect(() => {
-        setTwoParts(longQuestions[questionNumber-1]?.subQuestion2 ? 2 : 1)
-        setSubQues1(longQuestions[questionNumber-1]?.subQuestion1?.ques)
-        setSubQues2(longQuestions[questionNumber-1]?.subQuestion2?.ques)
-    }, [questionNumber, longQuestions])
+    // useEffect(() => {
+    //     setTwoParts(longQuestions[questionNumber-1]?.subQuestion2 ? 2 : 1)
+    //     setSubQues1(longQuestions[questionNumber-1]?.subQuestion1?.ques)
+    //     setSubQues2(longQuestions[questionNumber-1]?.subQuestion2?.ques)
+    // }, [questionNumber, longQuestions])
 
-    useEffect(() => {
-        setQues(questionType === 'long' ? longQuestions[questionNumber-1]?.ques : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.ques : null);
+    // useEffect(() => {
+    //     setQues(questionType === 'long' ? longQuestions[questionNumber-1]?.ques : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.ques : null);
 
-    }, [questionType, questionNumber, shortQuestions]);
+    // }, [questionType, questionNumber, shortQuestions]);
 
-    useEffect(() => {
-        setQuestionText(ques);
-        setSubQuestion1(subQues1);
-        setSubQuestion2(subQues2);
-        setLongQuestionSubType(twoParts);
-    }, [ques]);
+    // useEffect(() => {
+    //     setQuestionText(ques);
+    //     setSubQuestion1(subQues1);
+    //     setSubQuestion2(subQues2);
+    //     setLongQuestionSubType(twoParts);
+    // }, [ques]);
 
     const [image, setImage] = useState(null);
     const [addImage, setAddImage] = useState(false);
     const [questionText, setQuestionText] = useState(null)
     // long question will have subtype, if subtype is 1 then do nothing, if subtype is 2 two question of 5 makrs each
-    const [longQuestionSubType, setLongQuestionSubType] = useState(twoParts)
-    useEffect(()=>{
-        console.log("lonQuestionSubType", longQuestionSubType);
-    }, [longQuestionSubType])
+    const [longQuestionSubType, setLongQuestionSubType] = useState('1')
+    // useEffect(()=>{
+    //     console.log("lonQuestionSubType", longQuestionSubType);
+    // }, [longQuestionSubType])
     const [subQuestion1, setSubQuestion1] = useState(null)
     const [subQuestion2, setSubQuestion2] = useState(null)
     // long question with sub question
@@ -66,41 +63,41 @@ function EditQuestion() {
     const bottomRef = useRef(null); // Reference to the bottom element
 
     // variable to set the value in blooms level
-    const [boolVal, setBoolVal] = useState(null)
-    useEffect(() => {
-        setBoolVal(questionType === 'long' ? longQuestions[questionNumber]?.bloomLevel : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.bloomLevel : null);
-    }, [questionType, questionNumber, shortQuestions])
+    // const [boolVal, setBoolVal] = useState(null)
+    // useEffect(() => {
+    //     setBoolVal(questionType === 'long' ? longQuestions[questionNumber]?.bloomLevel : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.bloomLevel : null);
+    // }, [questionType, questionNumber, shortQuestions])
 
-    const [unitVal, setUnitVal] = useState(null)
-    useEffect(() => {
-        setUnitVal(questionType === 'long' ? longQuestions[questionNumber]?.unit : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.unit : null);
-    }, [questionType, questionNumber, shortQuestions])
+    // const [unitVal, setUnitVal] = useState(null)
+    // useEffect(() => {
+    //     setUnitVal(questionType === 'long' ? longQuestions[questionNumber]?.unit : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.unit : null);
+    // }, [questionType, questionNumber, shortQuestions])
 
-    const [coVal, setCoVal] = useState(null)
-    useEffect(() => {
-        setCoVal(questionType === 'long' ? longQuestions[questionNumber]?.co : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.co : null);
-    }, [questionType, questionNumber, shortQuestions])
+    // const [coVal, setCoVal] = useState(null)
+    // useEffect(() => {
+    //     setCoVal(questionType === 'long' ? longQuestions[questionNumber]?.co : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.co : null);
+    // }, [questionType, questionNumber, shortQuestions])
     
-    const [imgBtn, setImgBtn] = useState(null)
-    const [quesImg, setQuesImg] = useState(null)
-    useEffect(() => {
-        setQuesImg(questionType === 'long' ? longQuestions[questionNumber-1]?.image : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.image : null);
-        setImgBtn(quesImg != null ? 'Change Image' : 'Add Image')
-    }, [questionType, questionNumber, shortQuestions])
+    // const [imgBtn, setImgBtn] = useState(null)
+    // const [quesImg, setQuesImg] = useState(null)
+    // useEffect(() => {
+    //     setQuesImg(questionType === 'long' ? longQuestions[questionNumber-1]?.image : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.image : null);
+    //     setImgBtn(quesImg != null ? 'Change Image' : 'Add Image')
+    // }, [questionType, questionNumber, shortQuestions])
 
 
     
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        ['blockquote', 'code-block'],
+        ['blockquote'],
 
-        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
         [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
 
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        // [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
 
-        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        // [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
         [{ 'font': [] }],
         [{ 'align': [] }]
     ];
@@ -141,16 +138,26 @@ function EditQuestion() {
     }
 
     const handleAddSubQuestion1 = () => {
-        if (subQuestion1 == null || subQuestion1 === '<p><br></p>') {
+        if(Object.keys(longQuestion).length == 1){
+            alert('Already Added')
+            return;
+          }
+      
+          if(Object.keys(longQuestion).length == 2){
+            alert('Both the quesions already added')
+            return;
+          }
+      
+          if (subQuestion1 == null || subQuestion1 === '<p><br></p>') {
             alert('Please enter the question');
             return; // Exit the function early
-        }
-
-        // Check if bloomLevel, unit, and co are not selected
-        if (unit === '-' || bloomLevel === '-' || co === '-') {
+          }
+      
+          // Check if bloomLevel, unit, and co are not selected
+          if (unit === '-' || bloomLevel === '-' || co === '-') {
             alert('Please select Unit, Bloom\'s Level, and Course Outcome.');
             return; // Exit the function early
-        }
+          }
 
         const question = {
             ques: subQuestion1, // Set the ques property to the content from the Froala Editor
@@ -171,16 +178,26 @@ function EditQuestion() {
     }
 
     const handleAddSubQuestion2 = () => {
-        if (subQuestion2 == null || subQuestion2 === '<p><br></p>') {
+        if(Object.keys(longQuestion).length == 0){
+            alert('Enter First Questions First')
+            return;
+          }
+      
+          if(Object.keys(longQuestion).length == 2){
+            alert('Both the questions already added')
+            return;
+          }
+      
+          if (subQuestion2 == null || subQuestion2 === '<p><br></p>') {
             alert('Please enter the question');
             return; // Exit the function early
-        }
-
-        // Check if bloomLevel, unit, and co are not selected
-        if (unit === '-' || bloomLevel === '-' || co === '-') {
+          }
+      
+          // Check if bloomLevel, unit, and co are not selected
+          if (unit === '-' || bloomLevel === '-' || co === '-') {
             alert('Please select Unit, Bloom\'s Level, and Course Outcome.');
             return; // Exit the function early
-        }
+          }
 
         const question = {
             ques: subQuestion2, // Set the ques property to the content from the Froala Editor
@@ -198,6 +215,23 @@ function EditQuestion() {
     }
 
     const handleUpdateQuestion = () => {
+
+         // Check if the question type is not selected
+    if (questionType === 'choose') {
+        alert('Please select the question type');
+        return; // Exit the function early
+      }
+  
+      // Check if unit, bloomLevel, and co are not selected
+      if (unit === '-' || bloomLevel === '-' || co === '-') {
+        alert('Please select Unit, Bloom\'s Level, and Course Outcome.');
+        return; // Exit the function early
+      }
+
+      if (questionText == null || questionText === '<p><br></p>') {
+        alert('Please enter the question');
+        return; // Exit the function early
+      }
 
         const quesNumber = questionNumber;
 
@@ -364,7 +398,7 @@ function EditQuestion() {
                                 <h2 className='font-bold text-base text-white'>Unit</h2>
                                 {/* Dropdown to set unit */}
                                 <select value={unit} onChange={handleUnit} className='focus:outline-none h-8 text-white bg-black px-1 py-1 border-2 border-[#9c36b5] rounded-lg'>
-                                    <option value={unitVal}>{unitVal}</option>
+                                    <option value="-">-</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -378,7 +412,7 @@ function EditQuestion() {
                                 <h2 className='font-bold text-base text-white'>Bloom's Level</h2>
                                 {/* Dropdown to set Bloom's Level */}
                                 <select value={bloomLevel} onChange={handleBloomLevel} className='focus:outline-none h-8 text-white bg-black px-1 py-1 border-2 border-[#9c36b5] rounded-lg'>
-                                    <option value={boolVal}>{boolVal}</option>
+                                    <option value="-">-</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -393,7 +427,7 @@ function EditQuestion() {
                                 <h2 className='font-bold text-base text-white'>Course Outcome</h2>
                                 {/* Dropdown to set Course Outcome */}
                                 <select value={co} onChange={handleCo} className='focus:outline-none h-8 text-white bg-black px-1 py-1 border-2 border-[#9c36b5] rounded-lg'>
-                                    <option value={coVal}>{coVal}</option>
+                                    <option value="-">-</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -408,14 +442,14 @@ function EditQuestion() {
                     {/* Container to set question */}
                     {/* If long questions sub type is two add two questions of 5 marks each*/}
 
-                    {(questionType === 'long' && longQuestionSubType === '2') || (questionType === 'long' && twoParts === 2) ? (
+                    {(questionType === 'long' && longQuestionSubType === '2')? (
                         <div className='flex flex-col justify-center items-center w-full'>
                             {/* Long Sub Question 1 container */}
                             <div className='text-center w-11/12 flex flex-col gap-1'>
 
                                 <div className='flex gap-5 justify-between items-center w-full'>
                                     <button className='bg-black mb-2 border-2 border-[#9c36b5] text-[#9c36b5] px-4 py-2 rounded-lg mt-4' onClick={handleAddImage}>
-                                        {imgBtn}
+                                        Add Image
                                     </button>
                                     {/* Create a custom button to trigger file input */}
                                     <label className={addImage ? "visible custom-file-upload" : "hidden custom-file-upload"} >
@@ -477,11 +511,11 @@ function EditQuestion() {
                                 </label>
                             </div>
 
-                            {quesImg && (
+                            {/* {quesImg && (
                                 <div className="text-center mt-4">
                                     <img src={quesImg} alt="Question Image" className="max-w-xs mx-auto" />
                                 </div>
-                            )}
+                            )} */}
 
                             <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
 
