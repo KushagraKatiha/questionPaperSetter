@@ -176,6 +176,16 @@ const handleImageChange = (e) => {
   }
 
   const handleAddSubQuestion1 = () => {
+    if(Object.keys(longQuestion).length == 1){
+      alert('Already Added')
+      return;
+    }
+
+    if(Object.keys(longQuestion).length == 2){
+      alert('Both the quesions already added')
+      return;
+    }
+
     if (subQuestion1 == null || subQuestion1 === '<p><br></p>') {
       alert('Please enter the question');
       return; // Exit the function early
@@ -207,6 +217,16 @@ const handleImageChange = (e) => {
   }
 
   const handleAddSubQuestion2 = () => {
+    if(Object.keys(longQuestion).length == 0){
+      alert('Enter First Questions First')
+      return;
+    }
+
+    if(Object.keys(longQuestion).length == 2){
+      alert('Both the questions already added')
+      return;
+    }
+
     if (subQuestion2 == null || subQuestion2 === '<p><br></p>') {
       alert('Please enter the question');
       return; // Exit the function early
@@ -253,7 +273,7 @@ const handleImageChange = (e) => {
       const marks = questionType === 'long' ? 10 : 2;
       // check if long question has sub question
       if (longQuestionSubType === '2') {
-        if (Object.keys(longQuestion).length === 0) {
+        if (Object.keys(longQuestion).length != 2) {
           alert('Please enter both sub questions');
           return; // Exit the function early
         }
@@ -301,6 +321,7 @@ const handleImageChange = (e) => {
       setCo('');
       setQuestionText(null);
       setImage(null);   // Clear the selected image
+      setSelectedImage(null)
       setAddImage(false);
     } else {
       alert('You can only add 8 short and 4 long questions');

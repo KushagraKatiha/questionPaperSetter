@@ -251,7 +251,7 @@ function EditQuestion() {
             maxMarks,
             bloomLevel: bloomLevel,
             co: co,
-            image: image ? URL.createObjectURL(image) : null
+            image: image ? URL.createObjectURL(image) : image
         };
 
         // Delete the existing question at the specified index
