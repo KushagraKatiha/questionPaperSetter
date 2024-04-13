@@ -22,37 +22,14 @@ function EditQuestion() {
     // Variables
     const [questionType, setQuestionType] = useState('choose');
     const [questionNumber, setQuestionNumber] = useState(1);
-    // const [ques, setQues] = useState(null);
-    // const [subQues1, setSubQues1] = useState(null);
-    // const [subQues2, setSubQues2] = useState(null);
-    // const [twoParts, setTwoParts] = useState(null);
-
-    // useEffect(() => {
-    //     setTwoParts(longQuestions[questionNumber-1]?.subQuestion2 ? 2 : 1)
-    //     setSubQues1(longQuestions[questionNumber-1]?.subQuestion1?.ques)
-    //     setSubQues2(longQuestions[questionNumber-1]?.subQuestion2?.ques)
-    // }, [questionNumber, longQuestions])
-
-    // useEffect(() => {
-    //     setQues(questionType === 'long' ? longQuestions[questionNumber-1]?.ques : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.ques : null);
-
-    // }, [questionType, questionNumber, shortQuestions]);
-
-    // useEffect(() => {
-    //     setQuestionText(ques);
-    //     setSubQuestion1(subQues1);
-    //     setSubQuestion2(subQues2);
-    //     setLongQuestionSubType(twoParts);
-    // }, [ques]);
+ 
 
     const [image, setImage] = useState(null);
     const [addImage, setAddImage] = useState(false);
     const [questionText, setQuestionText] = useState(null)
     // long question will have subtype, if subtype is 1 then do nothing, if subtype is 2 two question of 5 makrs each
     const [longQuestionSubType, setLongQuestionSubType] = useState('1')
-    // useEffect(()=>{
-    //     console.log("lonQuestionSubType", longQuestionSubType);
-    // }, [longQuestionSubType])
+
     const [subQuestion1, setSubQuestion1] = useState(null)
     const [subQuestion2, setSubQuestion2] = useState(null)
     // long question with sub question
@@ -61,30 +38,6 @@ function EditQuestion() {
     const [bloomLevel, setBloomLevel] = useState('-');
     const [co, setCo] = useState('-');
     const bottomRef = useRef(null); // Reference to the bottom element
-
-    // variable to set the value in blooms level
-    // const [boolVal, setBoolVal] = useState(null)
-    // useEffect(() => {
-    //     setBoolVal(questionType === 'long' ? longQuestions[questionNumber]?.bloomLevel : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.bloomLevel : null);
-    // }, [questionType, questionNumber, shortQuestions])
-
-    // const [unitVal, setUnitVal] = useState(null)
-    // useEffect(() => {
-    //     setUnitVal(questionType === 'long' ? longQuestions[questionNumber]?.unit : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.unit : null);
-    // }, [questionType, questionNumber, shortQuestions])
-
-    // const [coVal, setCoVal] = useState(null)
-    // useEffect(() => {
-    //     setCoVal(questionType === 'long' ? longQuestions[questionNumber]?.co : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.co : null);
-    // }, [questionType, questionNumber, shortQuestions])
-    
-    // const [imgBtn, setImgBtn] = useState(null)
-    // const [quesImg, setQuesImg] = useState(null)
-    // useEffect(() => {
-    //     setQuesImg(questionType === 'long' ? longQuestions[questionNumber-1]?.image : questionType === 'short' && shortQuestions.length > 0 ? shortQuestions[questionNumber - 1]?.image : null);
-    //     setImgBtn(quesImg != null ? 'Change Image' : 'Add Image')
-    // }, [questionType, questionNumber, shortQuestions])
-
 
     
     const toolbarOptions = [
@@ -510,12 +463,6 @@ function EditQuestion() {
                                     <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
                                 </label>
                             </div>
-
-                            {/* {quesImg && (
-                                <div className="text-center mt-4">
-                                    <img src={quesImg} alt="Question Image" className="max-w-xs mx-auto" />
-                                </div>
-                            )} */}
 
                             <div id="editor" className=' bg-black rounded-lg border-2 border-[#9c36b5] p-2'>
 
