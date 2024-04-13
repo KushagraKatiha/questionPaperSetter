@@ -7,7 +7,6 @@ import QuestionSetter from './Components/QuestionSetter.jsx'
 import QuestionPaper from './Components/QuestionPaper.jsx'
 import App from './App.jsx'
 import EditQuestion from './Components/EditQuestion.jsx'
-import EditQuestionTwo from './Components/EditPageTwo.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,7 +14,6 @@ const router = createBrowserRouter(
       <Route path='/' element={<QuestionSetter/>}/>
       <Route path='format' element={<QuestionPaper/>}/>
       <Route path='edit-page' element={<EditQuestion/>}/>
-      <Route path='edit-page-2' element={<EditQuestionTwo/>}/>
       <Route path='*' element={<h1>404 Not Found</h1>}/>
     </Route>
   )
